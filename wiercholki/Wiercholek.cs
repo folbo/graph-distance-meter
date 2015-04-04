@@ -9,7 +9,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace wiercholki
 {
-    class Point
+    public class Point
     {
         public Point()
         {
@@ -34,9 +34,9 @@ namespace wiercholki
         Vertex FindNearestVertex(int x, int y, int range);
     }
     
-    enum Direction { Both, ToFirst, ToSecond };
+    public enum Direction { Both, ToFirst, ToSecond };
 
-    class Vertex : Point
+    public class Vertex : Point
     {
         public int Size { get; set; }
         public string Name { get; set; }
@@ -48,7 +48,7 @@ namespace wiercholki
         }
     }
 
-    class Edge
+    public class Edge
     {
         public Vertex FirstVertex { get; set; }
         public Vertex SecondVertex { get; set; }
@@ -56,7 +56,7 @@ namespace wiercholki
         public System.Drawing.Drawing2D.GraphicsPath Path { get; internal set; }
     }
 
-    class Graf : IGraf
+    public class Graf : IGraf
     {
         public List<Vertex> wierzcholki;
         public List<Edge> krawedzie;
@@ -132,6 +132,8 @@ namespace wiercholki
             }
             else
             {
+              
+
                 var vector = elem.SecondVertex.SubtractPoint(elem.FirstVertex);
 
                 vector = vector.Orthonormal().MultiplyPoint(10);
@@ -140,15 +142,18 @@ namespace wiercholki
                 foreach (var edge in edges)
                 {
                     edge.Path = new System.Drawing.Drawing2D.GraphicsPath();
-
+                    
                     var bezierPoints = new System.Drawing.PointF[4]
                     {
                         new System.Drawing.PointF(edge.FirstVertex.X, edge.FirstVertex.Y),
                         new System.Drawing.PointF(edge.FirstVertex.X - startVector.X, edge.FirstVertex.Y - startVector.Y),
-                        new System.Drawing.PointF(edge.SecondVertex.X - startVector.X, edge.SecondVertex.Y - startVector.Y),
+                        //new System.Drawing.PointF(edge.FirstVertex.X - startVector.X, edge.FirstVertex.Y - startVector.Y),
+                        new System.Drawing.PointF(-startVector.X + (edge.FirstVertex.X + edge.SecondVertex.X)/2, -startVector.Y + (edge.FirstVertex.Y + edge.SecondVertex.Y)/2),
+                       // new System.Drawing.PointF(edge.SecondVertex.X - startVector.X, edge.SecondVertex.Y - startVector.Y),
+                        //new System.Drawing.PointF(edge.SecondVertex.X - startVector.X, edge.SecondVertex.Y - startVector.Y),
                         new System.Drawing.PointF(edge.SecondVertex.X, edge.SecondVertex.Y)
                     };
-
+                    
                     edge.Path.AddBeziers(bezierPoints);
 
                     startVector = startVector.SubtractPoint(vector);
@@ -281,6 +286,20 @@ namespace wiercholki
             */
             var mouse = new System.Drawing.Point(x, y);
             return krawedzie.FirstOrDefault(edge => edge.Path.IsOutlineVisible(mouse, new System.Drawing.Pen(System.Drawing.Color.Black, range)));
+        }
+        public static System.Drawing.PointF GetPointOnCircle(System.Drawing.PointF p1, System.Drawing.PointF p2, Int32 radius)
+        {
+            System.Drawing.PointF pointref = System.Drawing.PointF.Subtract(p2, new System.Drawing.SizeF(p1));
+            double degrees = Math.Atan2(pointref.Y, pointref.X);
+            double cosx1 = Math.Cos(degrees);
+            double siny1 = Math.Sin(degrees);
+
+            double cosx2 = Math.Cos(degrees + Math.PI);
+            double siny2 = Math.Sin(degrees + Math.PI);
+
+            Console.WriteLine("origin X: " + p1.X + " Y: " +p1.Y);
+            Console.WriteLine("X: " + (int)(cosx1 * (float)(radius) + (float)p1.X) + " Y: " +  (int)(siny1 * (float)(radius) + (float)p1.Y));
+            return new System.Drawing.PointF((int)(cosx1 * (float)(radius) + (float)p1.X), (int)(siny1 * (float)(radius) + (float)p1.Y));
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace wiercholki
 {
-    class Matrix
+    public class Matrix
     {
         private List<List<int>> rows;
         public Matrix()

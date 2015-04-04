@@ -16,6 +16,8 @@ namespace wiercholki
     
     public partial class Form1 : Form
     {
+        public event UpdateMatrixDelegate UpdateMatrixEvent;
+
         private InputState state;
         private Graf graf;
 
@@ -28,7 +30,7 @@ namespace wiercholki
         private Edge edgeInBuild;
 
         private string nextVerticleText;
-
+        private Form2 frm;
 
 
         public Form1()
@@ -43,6 +45,10 @@ namespace wiercholki
 
             nextVerticleText = "w1";
             dataGridView1.AllowUserToAddRows = false;
+            frm = new Form2();
+            frm.Show();
+
+            UpdateMatrixEvent += frm.OnUpdateMatrix;
         }
 
 
@@ -154,7 +160,9 @@ namespace wiercholki
                         }
                         break;
                 }
-                ShowMatrix();
+                //ShowMatrix();
+               // UpdateMatrixEvent(graf);
+                matrixControl1.LoadMatrix(graf.Matrix, graf.wierzcholki);
             }
         }
         private void mainPanel_MouseUp(object sender, MouseEventArgs e)
@@ -318,13 +326,13 @@ namespace wiercholki
                         {
                             if (edge.direction == Direction.ToFirst)
                             {
-                                AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
+                                AdjustableArrowCap cap = new AdjustableArrowCap(2, 4);
                                 cap.Filled = true;
                                 pen.CustomStartCap = cap;
                             }
                             if (edge.direction == Direction.ToSecond)
                             {
-                                AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
+                                AdjustableArrowCap cap = new AdjustableArrowCap(2, 4);
                                 cap.Filled = true;
                                 pen.CustomEndCap = cap;
                             }
@@ -372,6 +380,7 @@ namespace wiercholki
                     }
                 }
             }
+
         }
 
         private void vertexModeButton_Click(object sender, EventArgs e)
@@ -397,6 +406,10 @@ namespace wiercholki
             {
                 (selected as Vertex).Name = nameTextBox.Text;
                 ShowMatrix();
+                var lol = frm.Controls["matrixControl"];
+                
+                matrixControl1.UpdateHeaders((selected as Vertex));
+                
 
                 int index = vertex1ComboBox.Items.IndexOf(selected);
                 vertex1ComboBox.Items.RemoveAt(index);
@@ -421,6 +434,7 @@ namespace wiercholki
         private void secondDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
             graf.ChangeDirection(selected as Edge, Direction.ToSecond);
+            
         }
 
 
