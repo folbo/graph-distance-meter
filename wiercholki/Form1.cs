@@ -42,7 +42,6 @@ namespace wiercholki
             propertyPanel.Visible = false;
 
             nextVerticleText = "w1";
-            dataGridView1.AllowUserToAddRows = false;
         }
 
 
@@ -154,7 +153,7 @@ namespace wiercholki
                         }
                         break;
                 }
-                ShowMatrix();
+                matrixControl1.LoadMatrix(graf.Matrix, graf.wierzcholki);
             }
         }
         private void mainPanel_MouseUp(object sender, MouseEventArgs e)
@@ -396,7 +395,7 @@ namespace wiercholki
             if (selected as Vertex != null)
             {
                 (selected as Vertex).Name = nameTextBox.Text;
-                ShowMatrix();
+                matrixControl1.UpdateHeaders((Vertex)selected);
 
                 int index = vertex1ComboBox.Items.IndexOf(selected);
                 vertex1ComboBox.Items.RemoveAt(index);
@@ -421,34 +420,6 @@ namespace wiercholki
         private void secondDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
             graf.ChangeDirection(selected as Edge, Direction.ToSecond);
-        }
-
-
-        private void ShowMatrix()
-        {
-            int size = graf.wierzcholki.Count;
-            dataGridView1.Rows.Clear();
-            dataGridView1.Columns.Clear();
-            dataGridView1.Refresh();
-            
-
-            for (int j = 0; j < size; j++)
-            {
-                dataGridView1.Columns.Add(graf.wierzcholki[j].Name, graf.wierzcholki[j].Name);
-                dataGridView1.Columns[graf.wierzcholki[j].Name].Width = 40;
-            }
-            for (int i = 0; i < size; i++)
-            {
-                string[] datarow = new string[size];
-                for (int j = 0; j < size; j++)
-                {
-                    datarow[j] = Convert.ToString(graf.Matrix[i,j]);
-
-                }
-                dataGridView1.Rows.Add(datarow);
-                dataGridView1.Rows[i].Height = 20;
-                dataGridView1.Rows[i].HeaderCell.Value = graf.wierzcholki[i].Name;
-            }
         }
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

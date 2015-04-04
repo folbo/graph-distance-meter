@@ -38,6 +38,7 @@
             this.openGraphButton = new System.Windows.Forms.Button();
             this.saveGraphButton = new System.Windows.Forms.Button();
             this.mainPanel = new wiercholki.DisplayPanel();
+            this.matrixControl1 = new wiercholki.MatrixControl();
             this.propertyPanel = new System.Windows.Forms.Panel();
             this.secondDirectedRadio = new System.Windows.Forms.RadioButton();
             this.firstDirectedRadio = new System.Windows.Forms.RadioButton();
@@ -52,7 +53,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.vertex2ComboBox = new System.Windows.Forms.ComboBox();
             this.vertex1ComboBox = new System.Windows.Forms.ComboBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -60,7 +60,6 @@
             this.propertyPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.matrixPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -186,6 +185,13 @@
             this.mainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseMove);
             this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             // 
+            // matrixControl1
+            // 
+            this.matrixControl1.Location = new System.Drawing.Point(3, 4);
+            this.matrixControl1.Name = "matrixControl1";
+            this.matrixControl1.Size = new System.Drawing.Size(198, 167);
+            this.matrixControl1.TabIndex = 1;
+            // 
             // propertyPanel
             // 
             this.propertyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -284,11 +290,11 @@
             // 
             this.matrixPanel.AutoScroll = true;
             this.matrixPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.matrixPanel.Controls.Add(this.matrixControl1);
             this.matrixPanel.Controls.Add(this.calculateDistance);
             this.matrixPanel.Controls.Add(this.label2);
             this.matrixPanel.Controls.Add(this.vertex2ComboBox);
             this.matrixPanel.Controls.Add(this.vertex1ComboBox);
-            this.matrixPanel.Controls.Add(this.dataGridView1);
             this.matrixPanel.Location = new System.Drawing.Point(526, 37);
             this.matrixPanel.Name = "matrixPanel";
             this.matrixPanel.Size = new System.Drawing.Size(206, 252);
@@ -329,15 +335,6 @@
             this.vertex1ComboBox.Size = new System.Drawing.Size(96, 21);
             this.vertex1ComboBox.TabIndex = 2;
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(198, 164);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,7 +354,6 @@
             this.panel1.PerformLayout();
             this.matrixPanel.ResumeLayout(false);
             this.matrixPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -384,11 +380,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel matrixPanel;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox vertex1ComboBox;
         private System.Windows.Forms.ComboBox vertex2ComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button calculateDistance;
+        private MatrixControl matrixControl1;
 
     }
 }

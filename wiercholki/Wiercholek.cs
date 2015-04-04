@@ -9,7 +9,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace wiercholki
 {
-    class Point
+    public class Point
     {
         public Point()
         {
@@ -34,9 +34,9 @@ namespace wiercholki
         Vertex FindNearestVertex(int x, int y, int range);
     }
     
-    enum Direction { Both, ToFirst, ToSecond };
+    public enum Direction { Both, ToFirst, ToSecond };
 
-    class Vertex : Point
+    public class Vertex : Point
     {
         public int Size { get; set; }
         public string Name { get; set; }
@@ -48,7 +48,7 @@ namespace wiercholki
         }
     }
 
-    class Edge
+    public class Edge
     {
         public Vertex FirstVertex { get; set; }
         public Vertex SecondVertex { get; set; }
@@ -56,7 +56,7 @@ namespace wiercholki
         public System.Drawing.Drawing2D.GraphicsPath Path { get; internal set; }
     }
 
-    class Graf : IGraf
+    public class Graf : IGraf
     {
         public List<Vertex> wierzcholki;
         public List<Edge> krawedzie;
