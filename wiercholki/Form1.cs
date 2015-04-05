@@ -617,26 +617,6 @@ namespace wiercholki
 
             mainPanel.Refresh();
         }
-
-        private void propertyPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void propertyPanel_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void propertyPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void propertyPanel_MouseUp(object sender, MouseEventArgs e)
-        {
-
-        }
     }
 
 
