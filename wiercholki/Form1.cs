@@ -151,9 +151,13 @@ namespace wiercholki
                                 mouse.Y = e.Y;
                             }
                         }
+                        if (e.Button == MouseButtons.Right)
+                        {
+                            selected = null;
+                        }
                         break;
                 }
-                matrixControl1.LoadMatrix(graph.Matrix, graph.wierzcholki);
+                matrixControl1.LoadMatrix(graph.Matrix, graph.verticles);
             }
         }
         private void mainPanel_MouseUp(object sender, MouseEventArgs e)
@@ -179,7 +183,7 @@ namespace wiercholki
                 mouse.X = e.X;
                 mouse.Y = e.Y;
 
-                TogglePropertyPanel();
+                //TogglePropertyPanel();
 
                 if (state == InputState.MoveVertex)
                 {
@@ -207,7 +211,7 @@ namespace wiercholki
                             if ((selected as Vertex).Y > mainPanel.Height)
                                 (selected as Vertex).Y = mainPanel.Height;
 
-                            var relatedEdges = graph.krawedzie.Where(edge =>
+                            var relatedEdges = graph.edges.Where(edge =>
                                 (edge.FirstVertex == selected) ||
                                 (edge.SecondVertex == selected)).ToArray();
                             foreach (var edge in relatedEdges)
@@ -234,7 +238,7 @@ namespace wiercholki
                         (selected as Vertex).X += dX;
                         (selected as Vertex).Y += dY;
 
-                        var relatedEdges = graph.krawedzie.Where(edge =>
+                        var relatedEdges = graph.edges.Where(edge =>
                             (edge.FirstVertex == selected) ||
                             (edge.SecondVertex == selected)).ToArray();
                         foreach (var edge in relatedEdges)
@@ -270,7 +274,7 @@ namespace wiercholki
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     graphics.Clear(Color.DarkGray);
 
-                    foreach (var vertex in graph.wierzcholki)
+                    foreach (var vertex in graph.verticles)
                     {
                         var X = vertex.X - vertex.Size / 2;
                         var Y = vertex.Y - vertex.Size / 2;
@@ -309,7 +313,7 @@ namespace wiercholki
                             }
                         }
                     }
-                    foreach (var edge in graph.krawedzie)
+                    foreach (var edge in graph.edges)
                     {
 
                         using (var pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1))
@@ -522,7 +526,7 @@ namespace wiercholki
                 {
                     var multiplied = graph.Matrix.MultiplyMatrix(graph.Matrix);
                     i++;
-                    while (multiplied[firstSelected.Id, secondSelected.Id] <= 0 && i < graph.wierzcholki.Count)
+                    while (multiplied[firstSelected.Id, secondSelected.Id] <= 0 && i < graph.verticles.Count)
                     {
                         i++;
                         multiplied = graph.Matrix.MultiplyMatrix(multiplied);
@@ -546,11 +550,11 @@ namespace wiercholki
         void UpdateEdges(int v1, int v2, int number)
         {
             //int needToAdd = Graph.
-            var relatedEdges = graph.krawedzie.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2));
+            var relatedEdges = graph.edges.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2));
             var list = relatedEdges.ToList();
 
-            var firstVertex = graph.wierzcholki.FirstOrDefault(x => x.Id == v1);
-            var secondVertex = graph.wierzcholki.FirstOrDefault(x => x.Id == v2);
+            var firstVertex = graph.verticles.FirstOrDefault(x => x.Id == v1);
+            var secondVertex = graph.verticles.FirstOrDefault(x => x.Id == v2);
 
             foreach (var edge in list)
             {

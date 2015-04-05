@@ -15,7 +15,7 @@ namespace wiercholki
         {
             rows = new List<List<int>>();
 
-            foreach (var verticle in graph.wierzcholki)
+            foreach (var verticle in graph.verticles)
             {
                 AddVerticle();
             }

@@ -53,36 +53,36 @@ namespace wiercholki
 
     public class Graph : IGraph
     {
-        public List<Vertex> wierzcholki;
-        public List<Edge> krawedzie;
+        public List<Vertex> verticles;
+        public List<Edge> edges;
 
         private Matrix matrix;
-
         public Matrix Matrix { get { return matrix; } }
+
         public Graph()
         {
-            wierzcholki = new List<Vertex>();
-            krawedzie = new List<Edge>();
+            verticles = new List<Vertex>();
+            edges = new List<Edge>();
 
             matrix = new Matrix();
         }
         public void AddVertex(Vertex elem)
         {
-            wierzcholki.Add(elem);
+            verticles.Add(elem);
             matrix.AddVerticle();
             UpdateVertexId();
         }
 
         public void UpdateVertexId()
         {
-            for (int i =0; i < wierzcholki.Count; i++)
+            for (int i =0; i < verticles.Count; i++)
             {
-                wierzcholki[i].Id = i;
+                verticles[i].Id = i;
             }
         }
         public void RemoveVertex(Vertex elem)
         {
-            var relatedEdges = krawedzie.Where(x => (x.FirstVertex == elem || x.SecondVertex == elem));
+            var relatedEdges = edges.Where(x => (x.FirstVertex == elem || x.SecondVertex == elem));
             var list = relatedEdges.ToList();
             foreach (var edge in list)
             {
@@ -90,8 +90,8 @@ namespace wiercholki
             }
 
 
-            if (wierzcholki.Contains(elem))
-                wierzcholki.Remove(elem);
+            if (verticles.Contains(elem))
+                verticles.Remove(elem);
 
             matrix.RemoveVerticle(elem.Id);
 
@@ -101,7 +101,7 @@ namespace wiercholki
         public void UpdatePaths(Edge elem)
         {
             Edge[] edges =
-                krawedzie.Where(
+                this.edges.Where(
                     edge =>
                         (edge.FirstVertex == elem.FirstVertex && edge.SecondVertex == elem.SecondVertex) ||
                         (edge.FirstVertex == elem.SecondVertex && edge.SecondVertex == elem.FirstVertex)).ToArray();
@@ -153,7 +153,7 @@ namespace wiercholki
 
         public void AddEdge(Edge elem)
         {
-            krawedzie.Add(elem);
+            edges.Add(elem);
             UpdatePaths(elem);
 
             if (elem.Direction == Direction.Both)
@@ -182,8 +182,8 @@ namespace wiercholki
 
         public void RemoveEdge(Edge elem)
         {
-            if (krawedzie.Contains(elem))
-                krawedzie.Remove(elem);
+            if (edges.Contains(elem))
+                edges.Remove(elem);
 
             if (elem.FirstVertex == elem.SecondVertex)
             {
@@ -215,7 +215,7 @@ namespace wiercholki
         {
             Vertex nearest = null;
             int distance = range;
-            foreach (var vertex in wierzcholki)
+            foreach (var vertex in verticles)
             {
                 if (Math.Pow(x - vertex.X, 2) + Math.Pow(y - vertex.Y, 2) < distance)
                     nearest = vertex;
@@ -263,7 +263,7 @@ namespace wiercholki
             /*
             Edge nearest = null;
             int distance = range;
-            foreach (var edge in krawedzie)
+            foreach (var edge in edges)
             {
                 Vertex mouse = new Vertex();
                 mouse.X = x;
@@ -275,7 +275,7 @@ namespace wiercholki
             return nearest; 
             */
             var mouse = new System.Drawing.Point(x, y);
-            return krawedzie.FirstOrDefault(edge => edge.Path.IsOutlineVisible(mouse, new System.Drawing.Pen(System.Drawing.Color.Black, range)));
+            return edges.FirstOrDefault(edge => edge.Path.IsOutlineVisible(mouse, new System.Drawing.Pen(System.Drawing.Color.Black, range)));
         }
     }
 }
