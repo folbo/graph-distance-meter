@@ -378,10 +378,10 @@ namespace wiercholki
         // Property panel appearance
         private void PropertyPanelEdge()
         {
-            titleLabel.Text = "Właściowości krawędzi";
+            titleLabel.Text = "Edge properties";
             propertyPanel.Height = 90; //185, 110
 
-            nameLabel.Text = "Kierunek: ";
+            nameLabel.Text = "Direction: ";
             nameTextBox.Visible = false;
 
             bothDirectedRadio.Visible = true;
@@ -400,10 +400,10 @@ namespace wiercholki
 
         void PropertyPanelVertex()
         {
-            titleLabel.Text = "Właściowości wierzchołka";
+            titleLabel.Text = "Vertex properties";
             propertyPanel.Height = 50; //185, 64
 
-            nameLabel.Text = "Nazwa";
+            nameLabel.Text = "Name";
             nameTextBox.Visible = true;
 
             bothDirectedRadio.Visible = false;
@@ -518,7 +518,7 @@ namespace wiercholki
                 if (firstSelected == secondSelected)
                 {
                     int zero = 0;
-                    MessageBox.Show("Odległość wynosi: " + zero.ToString() + ".\n\nZ definicji, ponieważ odniesienie do tego samego wierzchołka.");
+                    MessageBox.Show("Distance is: " + zero.ToString() + ".\n\nAccording to definition - distance between the same verticles is equal 0.");
                     return;
                 }
                 int i = 1;
@@ -536,7 +536,7 @@ namespace wiercholki
                         i = 0;
                     }
                 }
-                MessageBox.Show("Odległość wynosi: " + i.ToString() + ".");
+                MessageBox.Show("Distance is: " + i.ToString() + ".");
             }
         }
 

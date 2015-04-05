@@ -94,12 +94,12 @@
             this.radioButton3.Appearance = System.Windows.Forms.Appearance.Button;
             this.radioButton3.AutoSize = true;
             this.radioButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButton3.Location = new System.Drawing.Point(213, 0);
+            this.radioButton3.Location = new System.Drawing.Point(163, 0);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(60, 25);
+            this.radioButton3.Size = new System.Drawing.Size(81, 25);
             this.radioButton3.TabIndex = 4;
             this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Zaznacz";
+            this.radioButton3.Text = "Select/Move";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
@@ -108,12 +108,12 @@
             this.edgeModeButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.edgeModeButton.AutoSize = true;
             this.edgeModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.edgeModeButton.Location = new System.Drawing.Point(111, 0);
+            this.edgeModeButton.Location = new System.Drawing.Point(88, 0);
             this.edgeModeButton.Name = "edgeModeButton";
-            this.edgeModeButton.Size = new System.Drawing.Size(96, 25);
+            this.edgeModeButton.Size = new System.Drawing.Size(69, 25);
             this.edgeModeButton.TabIndex = 3;
             this.edgeModeButton.TabStop = true;
-            this.edgeModeButton.Text = "Rysuj krawędzie";
+            this.edgeModeButton.Text = "Edit edges";
             this.edgeModeButton.UseVisualStyleBackColor = true;
             this.edgeModeButton.Click += new System.EventHandler(this.edgeModeButton_Click);
             // 
@@ -124,10 +124,10 @@
             this.vertexModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.vertexModeButton.Location = new System.Drawing.Point(3, 0);
             this.vertexModeButton.Name = "vertexModeButton";
-            this.vertexModeButton.Size = new System.Drawing.Size(102, 25);
+            this.vertexModeButton.Size = new System.Drawing.Size(79, 25);
             this.vertexModeButton.TabIndex = 2;
             this.vertexModeButton.TabStop = true;
-            this.vertexModeButton.Text = "Rysuj wierzchołki";
+            this.vertexModeButton.Text = "Edit verticles";
             this.vertexModeButton.UseVisualStyleBackColor = true;
             this.vertexModeButton.Click += new System.EventHandler(this.vertexModeButton_Click);
             // 
@@ -145,7 +145,7 @@
             this.newGraphButton.Name = "newGraphButton";
             this.newGraphButton.Size = new System.Drawing.Size(75, 23);
             this.newGraphButton.TabIndex = 0;
-            this.newGraphButton.Text = "Nowy";
+            this.newGraphButton.Text = "New graph";
             this.newGraphButton.UseVisualStyleBackColor = true;
             this.newGraphButton.Click += new System.EventHandler(this.newGraphButton_Click);
             // 
@@ -183,10 +183,10 @@
             this.secondDirectedRadio.AutoSize = true;
             this.secondDirectedRadio.Location = new System.Drawing.Point(66, 68);
             this.secondDirectedRadio.Name = "secondDirectedRadio";
-            this.secondDirectedRadio.Size = new System.Drawing.Size(83, 17);
+            this.secondDirectedRadio.Size = new System.Drawing.Size(94, 17);
             this.secondDirectedRadio.TabIndex = 5;
             this.secondDirectedRadio.TabStop = true;
-            this.secondDirectedRadio.Text = "Do drugiego";
+            this.secondDirectedRadio.Text = "To the second";
             this.secondDirectedRadio.UseVisualStyleBackColor = true;
             this.secondDirectedRadio.MouseClick += new System.Windows.Forms.MouseEventHandler(this.secondDirectedRadio_MouseClick);
             // 
@@ -195,10 +195,10 @@
             this.firstDirectedRadio.AutoSize = true;
             this.firstDirectedRadio.Location = new System.Drawing.Point(66, 45);
             this.firstDirectedRadio.Name = "firstDirectedRadio";
-            this.firstDirectedRadio.Size = new System.Drawing.Size(95, 17);
+            this.firstDirectedRadio.Size = new System.Drawing.Size(75, 17);
             this.firstDirectedRadio.TabIndex = 4;
             this.firstDirectedRadio.TabStop = true;
-            this.firstDirectedRadio.Text = "Do pierwszego";
+            this.firstDirectedRadio.Text = "To the first";
             this.firstDirectedRadio.UseVisualStyleBackColor = true;
             this.firstDirectedRadio.MouseClick += new System.Windows.Forms.MouseEventHandler(this.firstDirectedRadio_MouseClick);
             // 
@@ -207,10 +207,10 @@
             this.bothDirectedRadio.AutoSize = true;
             this.bothDirectedRadio.Location = new System.Drawing.Point(66, 22);
             this.bothDirectedRadio.Name = "bothDirectedRadio";
-            this.bothDirectedRadio.Size = new System.Drawing.Size(78, 17);
+            this.bothDirectedRadio.Size = new System.Drawing.Size(47, 17);
             this.bothDirectedRadio.TabIndex = 3;
             this.bothDirectedRadio.TabStop = true;
-            this.bothDirectedRadio.Text = "Obie strony";
+            this.bothDirectedRadio.Text = "Both";
             this.bothDirectedRadio.UseVisualStyleBackColor = true;
             this.bothDirectedRadio.MouseClick += new System.Windows.Forms.MouseEventHandler(this.bothDirectedRadio_MouseClick);
             // 
@@ -219,18 +219,18 @@
             this.titleLabel.AutoSize = true;
             this.titleLabel.Location = new System.Drawing.Point(26, 0);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(129, 13);
+            this.titleLabel.Size = new System.Drawing.Size(46, 13);
             this.titleLabel.TabIndex = 2;
-            this.titleLabel.Text = "Właściwości wierzchołka";
+            this.titleLabel.Text = "Property";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(3, 22);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(40, 13);
+            this.nameLabel.Size = new System.Drawing.Size(35, 13);
             this.nameLabel.TabIndex = 1;
-            this.nameLabel.Text = "Nazwa";
+            this.nameLabel.Text = "Name";
             // 
             // nameTextBox
             // 
@@ -253,9 +253,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(52, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.Size = new System.Drawing.Size(87, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Macierz sąsiedztwa";
+            this.label1.Text = "Adjacency matrix";
             // 
             // matrixPanel
             // 
@@ -284,7 +284,7 @@
             this.calculateDistance.Name = "calculateDistance";
             this.calculateDistance.Size = new System.Drawing.Size(75, 23);
             this.calculateDistance.TabIndex = 5;
-            this.calculateDistance.Text = "Oblicz";
+            this.calculateDistance.Text = "Calculate";
             this.calculateDistance.UseVisualStyleBackColor = true;
             this.calculateDistance.Click += new System.EventHandler(this.calculateDistance_Click);
             // 
@@ -293,9 +293,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 174);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(192, 13);
+            this.label2.Size = new System.Drawing.Size(200, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Oblicz odległość między wierzchołkami";
+            this.label2.Text = "Calculate distance between two verticles";
             // 
             // vertex2ComboBox
             // 
@@ -320,7 +320,7 @@
             this.ClientSize = new System.Drawing.Size(759, 348);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
-            this.Text = "Obliczanie odległości wierzchołków";
+            this.Text = "Calculating distance between verticles";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
