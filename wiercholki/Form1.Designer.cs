@@ -320,7 +320,7 @@
             this.ClientSize = new System.Drawing.Size(759, 348);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Obliczanie odległości wierzchołków";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
