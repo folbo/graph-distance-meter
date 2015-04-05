@@ -198,6 +198,15 @@ namespace wiercholki
                             (selected as Vertex).X += dX;
                             (selected as Vertex).Y += dY;
 
+                            if ((selected as Vertex).X < 0)
+                                (selected as Vertex).X = 0;
+                            if ((selected as Vertex).X > mainPanel.Width)
+                                (selected as Vertex).X = mainPanel.Width;
+                            if ((selected as Vertex).Y < 0)
+                                (selected as Vertex).Y = 0;
+                            if ((selected as Vertex).Y > mainPanel.Height)
+                                (selected as Vertex).Y = mainPanel.Height;
+
                             var relatedEdges = graph.krawedzie.Where(edge =>
                                 (edge.FirstVertex == selected) ||
                                 (edge.SecondVertex == selected)).ToArray();
@@ -263,7 +272,10 @@ namespace wiercholki
 
                     foreach (var vertex in graph.wierzcholki)
                     {
-                        graphics.DrawEllipse(System.Drawing.Pens.Indigo, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
+                        var X = vertex.X - vertex.Size / 2;
+                        var Y = vertex.Y - vertex.Size / 2;
+                        
+                        graphics.DrawEllipse(System.Drawing.Pens.Indigo, X, Y, vertex.Size, vertex.Size);
                         FontFamily fontFamily = new FontFamily("Times New Roman");
                         Font font = new Font(
                            fontFamily,
@@ -272,6 +284,10 @@ namespace wiercholki
                            GraphicsUnit.Pixel);
 
                         graphics.DrawString(vertex.Name, font, Brushes.Black, new PointF(vertex.X - 20, vertex.Y - 20));
+
+                        
+                        
+                        
                         //najpierw pokoloruj zaznaczony, potem obsłuż hover
                         if (vertex == selected as Vertex)
                         {
@@ -279,7 +295,7 @@ namespace wiercholki
                             {
                                 // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
                                 //vertex.Size + 1, vertex.Size + 1);
-                                graphics.FillEllipse(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
+                                graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
                             }
                         }
                         //as vertex
@@ -289,7 +305,7 @@ namespace wiercholki
                             {
                                 // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
                                 //vertex.Size + 1, vertex.Size + 1);
-                                graphics.FillEllipse(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
+                                graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
                             }
                         }
                     }
