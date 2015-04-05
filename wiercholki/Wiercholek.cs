@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 
 namespace wiercholki
 {
@@ -24,7 +19,7 @@ namespace wiercholki
         public float X { get; set; }
         public float Y { get; set; }
     }
-    interface IGraf
+    interface IGraph
     {
         void AddVertex(Vertex elem);
         void RemoveVertex(Vertex elem);
@@ -52,11 +47,11 @@ namespace wiercholki
     {
         public Vertex FirstVertex { get; set; }
         public Vertex SecondVertex { get; set; }
-        public Direction direction { get; set; }
+        public Direction Direction { get; set; }
         public System.Drawing.Drawing2D.GraphicsPath Path { get; internal set; }
     }
 
-    public class Graf : IGraf
+    public class Graph : IGraph
     {
         public List<Vertex> wierzcholki;
         public List<Edge> krawedzie;
@@ -64,7 +59,7 @@ namespace wiercholki
         private Matrix matrix;
 
         public Matrix Matrix { get { return matrix; } }
-        public Graf()
+        public Graph()
         {
             wierzcholki = new List<Vertex>();
             krawedzie = new List<Edge>();
@@ -161,7 +156,7 @@ namespace wiercholki
             krawedzie.Add(elem);
             UpdatePaths(elem);
 
-            if (elem.direction == Direction.Both)
+            if (elem.Direction == Direction.Both)
             {
                 if (elem.FirstVertex != elem.SecondVertex)
                 {
@@ -173,11 +168,11 @@ namespace wiercholki
                     matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] += 1;
                 }
             }
-            if (elem.direction == Direction.ToFirst)
+            if (elem.Direction == Direction.ToFirst)
             {
                 matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] += 1;
             }
-            if (elem.direction == Direction.ToSecond)
+            if (elem.Direction == Direction.ToSecond)
             {
                 matrix[elem.SecondVertex.Id, elem.FirstVertex.Id] += 1;
             }
@@ -196,17 +191,17 @@ namespace wiercholki
                 return;
             }
 
-            if (elem.direction == Direction.Both)
+            if (elem.Direction == Direction.Both)
             {
                 matrix[elem.SecondVertex.Id, elem.FirstVertex.Id] -= 1;
                 matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] -= 1;
             }
-            if (elem.direction == Direction.ToFirst)
+            if (elem.Direction == Direction.ToFirst)
             {
                 matrix[elem.SecondVertex.Id, elem.FirstVertex.Id] -= 1;
                 //matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] -= 1;
             }
-            if (elem.direction == Direction.ToSecond)
+            if (elem.Direction == Direction.ToSecond)
             {
                 matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] -= 1;
                 //matrix[elem.FirstVertex.Id, elem.SecondVertex.Id] -= 1;
@@ -230,9 +225,9 @@ namespace wiercholki
 
         public void ChangeDirection(Edge edge, Direction dir)
         {
-            if (dir == Direction.Both && edge.direction != Direction.Both)
+            if (dir == Direction.Both && edge.Direction != Direction.Both)
             {
-                if (edge.direction == Direction.ToSecond)
+                if (edge.Direction == Direction.ToSecond)
                 {
                     matrix[edge.SecondVertex.Id, edge.FirstVertex.Id] += 1;
                 }
@@ -242,23 +237,23 @@ namespace wiercholki
                 }
 
             }
-            if (dir == Direction.ToFirst && edge.direction != Direction.ToFirst)
+            if (dir == Direction.ToFirst && edge.Direction != Direction.ToFirst)
             {
-                if (edge.direction == Direction.ToSecond)
+                if (edge.Direction == Direction.ToSecond)
                 {
                     matrix[edge.SecondVertex.Id, edge.FirstVertex.Id] += 1;
                 }
                 matrix[edge.FirstVertex.Id, edge.SecondVertex.Id] -= 1;
             }
-            if (dir == Direction.ToSecond && edge.direction != Direction.ToSecond)
+            if (dir == Direction.ToSecond && edge.Direction != Direction.ToSecond)
             {
-                if (edge.direction == Direction.ToFirst)
+                if (edge.Direction == Direction.ToFirst)
                 {
                     matrix[edge.FirstVertex.Id, edge.SecondVertex.Id] += 1;
                 }
                 matrix[edge.SecondVertex.Id, edge.FirstVertex.Id] -= 1;
             }
-            edge.direction = dir;
+            edge.Direction = dir;
 
             matrix.Show();
         }

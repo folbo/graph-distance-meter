@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace wiercholki
 {
@@ -15,11 +11,11 @@ namespace wiercholki
             rows = new List<List<int>>();
         }
 
-        public Matrix(Graf graf)
+        public Matrix(Graph graph)
         {
             rows = new List<List<int>>();
 
-            foreach (var verticle in graf.wierzcholki)
+            foreach (var verticle in graph.wierzcholki)
             {
                 AddVerticle();
             }

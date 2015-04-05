@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace wiercholki
 {
-    enum InputState { DrawVertex, DrawEdge, MoveVertex, NoInput }
-    
+    enum InputState { DrawVertex, DrawEdge, MoveVertex, NoInput, MovePropertyPanel }
+
     public partial class Form1 : Form
     {
         private InputState state;
-        private Graf graf;
+        private Graph graph;
 
         private Point mouse;
 
@@ -29,7 +24,8 @@ namespace wiercholki
 
         private string nextVerticleText;
 
-
+        int dX;
+        int dY;
 
         public Form1()
         {
@@ -41,13 +37,14 @@ namespace wiercholki
 
             propertyPanel.Visible = false;
 
-            nextVerticleText = "w1";
+            nextVerticleText = "A";
+            matrixControl1.UpdateEdges += UpdateEdges;
         }
 
-
+        private System.Drawing.Point? clickPosition;
         private void mainPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            if (graf != null)
+            if (graph != null)
             {
                 switch (state)
                 {
@@ -60,12 +57,10 @@ namespace wiercholki
                             v.Y = e.Y;
                             v.Size = 10;
                             v.Name = nextVerticleText;
-                            graf.AddVertex(v);
+                            graph.AddVertex(v);
 
                             selected = v;
-                            int lastNumber = Convert.ToInt32(nextVerticleText.Substring(1));
-                            nextVerticleText = nextVerticleText.Remove(1);
-                            nextVerticleText += lastNumber + 1;
+                            nextVerticleText = Alphabet.GetNextBase26(nextVerticleText);
 
                             mainPanel.Refresh();
                             vertex1ComboBox.Items.Add(v);
@@ -76,7 +71,7 @@ namespace wiercholki
                         {
                             if (hovered as Vertex != null)
                             {
-                                graf.RemoveVertex(hovered as Vertex);
+                                graph.RemoveVertex(hovered as Vertex);
                             }
                             else
                             {
@@ -101,13 +96,13 @@ namespace wiercholki
                                 {
                                     edgeInBuild = new Edge();
                                     edgeInBuild.FirstVertex = hovered as Vertex;
-                                    edgeInBuild.direction = Direction.Both;
+                                    edgeInBuild.Direction = Direction.Both;
                                 }
-                                    //koncz rysowanie
+                                //koncz rysowanie
                                 else
                                 {
                                     edgeInBuild.SecondVertex = hovered as Vertex;
-                                    graf.AddEdge(edgeInBuild);
+                                    graph.AddEdge(edgeInBuild);
                                     edgeInBuild = null;
                                 }
 
@@ -124,7 +119,7 @@ namespace wiercholki
                             {
                                 if (hovered as Edge != null)
                                 {
-                                    graf.RemoveEdge(hovered as Edge);
+                                    graph.RemoveEdge(hovered as Edge);
                                 }
                                 else
                                 {
@@ -140,103 +135,46 @@ namespace wiercholki
                         }
                         break;
                     case InputState.NoInput:
-                        selected = hovered as Vertex;
-                        if ((hovered as Vertex) == null)
+                        if (e.Button == MouseButtons.Left)
                         {
-                            selected = hovered as Edge;
-                        }
+                            selected = hovered as Vertex;
+                            if ((hovered as Vertex) == null)
+                            {
+                                selected = hovered as Edge;
+                            }
 
-                        TogglePropertyPanel();
-                        if (selected as Vertex != null)
-                        {
-                            state = InputState.MoveVertex;
+                            TogglePropertyPanel();
+                            if (selected as Vertex != null)
+                            {
+                                state = InputState.MoveVertex;
+                                mouse.X = e.X;
+                                mouse.Y = e.Y;
+                            }
                         }
                         break;
                 }
-                matrixControl1.LoadMatrix(graf.Matrix, graf.wierzcholki);
+                matrixControl1.LoadMatrix(graph.Matrix, graph.wierzcholki);
             }
         }
         private void mainPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            if (graf != null)
+            if (graph != null)
             {
                 if (state == InputState.MoveVertex)
                     state = InputState.NoInput;
+
+                clickPosition = null;
             }
         }
 
-        private void PropertyPanelEdge()
-        {
-            titleLabel.Text = "Właściowości krawędzi";
-            propertyPanel.Height = 110; //185, 110
 
-            nameLabel.Text = "Kierunek: ";
-            nameTextBox.Visible = false;
-
-            bothDirectedRadio.Visible = true;
-            firstDirectedRadio.Visible = true;
-            secondDirectedRadio.Visible = true;
-            if ((selected as Edge) != null)
-            {
-                if ((selected as Edge).direction == Direction.Both)
-                    bothDirectedRadio.Checked = true;
-                if ((selected as Edge).direction == Direction.ToFirst)
-                    firstDirectedRadio.Checked = true;
-                if ((selected as Edge).direction == Direction.ToSecond)
-                    secondDirectedRadio.Checked = true;
-            }
-        }
-
-        void PropertyPanelVertex()
-        {
-            titleLabel.Text = "Właściowości wierzchołka";
-            propertyPanel.Height = 64; //185, 64
-
-            nameLabel.Text = "Nazwa";
-            nameTextBox.Visible = true;
-
-            bothDirectedRadio.Visible = false;
-            firstDirectedRadio.Visible = false;
-            secondDirectedRadio.Visible = false;
-        }
-
-        private void TogglePropertyPanel()
-        {
-          
-                if ((selected as Vertex) == null)
-                {
-                    if (selected as Edge != null)
-                    {
-                        PropertyPanelEdge();
-                        propertyPanel.Visible = true;
-                    }
-                    else
-                    {
-                        PropertyPanelVertex();
-                        if ((hovered as Vertex) != null)
-                        {
-                            propertyPanel.Visible = true;
-                            nameTextBox.Text =( hovered as Vertex).Name;
-                        }
-                        else
-                            propertyPanel.Visible = false;
-                    }
-                }
-                else
-                {
-                    PropertyPanelVertex();
-                    propertyPanel.Visible = true;
-                    nameTextBox.Text = (selected as Vertex).Name;
-                }
-            
-        }
         private void mainPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (graf != null)
+            if (graph != null)
             {
-                hovered = graf.FindNearestVertex(e.X, e.Y, 50);
+                hovered = graph.FindNearestVertex(e.X, e.Y, 50);
                 if ((hovered as Vertex) == null)
-                    hovered = graf.FindNearestEdge(e.X, e.Y, 10);
+                    hovered = graph.FindNearestEdge(e.X, e.Y, 10);
 
                 mouse.X = e.X;
                 mouse.Y = e.Y;
@@ -247,48 +185,93 @@ namespace wiercholki
                 {
                     if ((selected as Vertex) != null)
                     {
-                        (selected as Vertex).X = e.X;
-                        (selected as Vertex).Y = e.Y;
+                        if (!clickPosition.HasValue)
+                        {
+                            clickPosition = e.Location;
+                        }
+                        else
+                        {
 
-                        var relatedEdges = graf.krawedzie.Where( edge =>
+                            dX = e.Location.X - clickPosition.Value.X;
+                            dY = e.Location.Y - clickPosition.Value.Y;
+
+                            (selected as Vertex).X += dX;
+                            (selected as Vertex).Y += dY;
+
+                            var relatedEdges = graph.krawedzie.Where(edge =>
+                                (edge.FirstVertex == selected) ||
+                                (edge.SecondVertex == selected)).ToArray();
+                            foreach (var edge in relatedEdges)
+                            {
+                                graph.UpdatePaths(edge);
+                            }
+
+                            //reset click postition so move offset won't increase forever
+                            clickPosition = e.Location;
+                        }
+                    }
+                }
+                if (state == InputState.MovePropertyPanel)
+                {
+                    if (!clickPosition.HasValue)
+                    {
+                        clickPosition = e.Location;
+                    }
+                    else
+                    {
+                        dX = e.Location.X - clickPosition.Value.X;
+                        dY = e.Location.Y - clickPosition.Value.Y;
+
+                        (selected as Vertex).X += dX;
+                        (selected as Vertex).Y += dY;
+
+                        var relatedEdges = graph.krawedzie.Where(edge =>
                             (edge.FirstVertex == selected) ||
                             (edge.SecondVertex == selected)).ToArray();
                         foreach (var edge in relatedEdges)
                         {
-                            graf.UpdatePaths(edge);
+                            graph.UpdatePaths(edge);
                         }
+
+                        //reset click postition so move offset won't increase forever
+                        clickPosition = e.Location;
                     }
                 }
                 mainPanel.Refresh();
             }
         }
 
+        /// <summary>
+        /// create new graph
+        /// </summary>
         private void newGraphButton_Click(object sender, EventArgs e)
         {
-            graf = new Graf();
+            graph = new Graph();
             mainPanel.Refresh();
+            nextVerticleText = "A";
+            matrixControl1.Refresh();
         }
 
         private void mainPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (graf != null)
+            if (graph != null)
             {
                 using (var graphics = Graphics.FromImage(mainPanel.Bitmap))
                 {
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.Clear(Color.Black);
+                    graphics.Clear(Color.DarkGray);
 
-                    foreach (var vertex in graf.wierzcholki)
+                    foreach (var vertex in graph.wierzcholki)
                     {
-                        graphics.DrawEllipse(System.Drawing.Pens.BlueViolet, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
+                        graphics.DrawEllipse(System.Drawing.Pens.Indigo, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
                         FontFamily fontFamily = new FontFamily("Times New Roman");
                         Font font = new Font(
                            fontFamily,
                            12,
                            FontStyle.Regular,
                            GraphicsUnit.Pixel);
-                        
-                        graphics.DrawString(vertex.Name, font, Brushes.White, new PointF(vertex.X-20, vertex.Y-20));
+
+                        graphics.DrawString(vertex.Name, font, Brushes.Black, new PointF(vertex.X - 20, vertex.Y - 20));
                         //najpierw pokoloruj zaznaczony, potem obsłuż hover
                         if (vertex == selected as Vertex)
                         {
@@ -304,24 +287,24 @@ namespace wiercholki
                         {
                             using (Brush brush = new SolidBrush(Color.FromArgb(100, 20, 60, 200)))
                             {
-                               // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
-                                    //vertex.Size + 1, vertex.Size + 1);
+                                // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
+                                //vertex.Size + 1, vertex.Size + 1);
                                 graphics.FillEllipse(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2, vertex.Size, vertex.Size);
                             }
                         }
                     }
-                    foreach (var edge in graf.krawedzie)
+                    foreach (var edge in graph.krawedzie)
                     {
-                       
-                        using (var pen = new System.Drawing.Pen(System.Drawing.Color.White, 1))
+
+                        using (var pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1))
                         {
-                            if (edge.direction == Direction.ToFirst)
+                            if (edge.Direction == Direction.ToFirst)
                             {
                                 AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
                                 cap.Filled = true;
                                 pen.CustomStartCap = cap;
                             }
-                            if (edge.direction == Direction.ToSecond)
+                            if (edge.Direction == Direction.ToSecond)
                             {
                                 AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
                                 cap.Filled = true;
@@ -351,7 +334,7 @@ namespace wiercholki
                     if (edgeInBuild != null)
                     {
                         //magnetic
-                        if ((hovered as Vertex)!= null)
+                        if ((hovered as Vertex) != null)
                         {
                             using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
                             {
@@ -372,6 +355,74 @@ namespace wiercholki
                 }
             }
         }
+        // Property panel appearance
+        private void PropertyPanelEdge()
+        {
+            titleLabel.Text = "Właściowości krawędzi";
+            propertyPanel.Height = 90; //185, 110
+
+            nameLabel.Text = "Kierunek: ";
+            nameTextBox.Visible = false;
+
+            bothDirectedRadio.Visible = true;
+            firstDirectedRadio.Visible = true;
+            secondDirectedRadio.Visible = true;
+            if ((selected as Edge) != null)
+            {
+                if ((selected as Edge).Direction == Direction.Both)
+                    bothDirectedRadio.Checked = true;
+                if ((selected as Edge).Direction == Direction.ToFirst)
+                    firstDirectedRadio.Checked = true;
+                if ((selected as Edge).Direction == Direction.ToSecond)
+                    secondDirectedRadio.Checked = true;
+            }
+        }
+
+        void PropertyPanelVertex()
+        {
+            titleLabel.Text = "Właściowości wierzchołka";
+            propertyPanel.Height = 50; //185, 64
+
+            nameLabel.Text = "Nazwa";
+            nameTextBox.Visible = true;
+
+            bothDirectedRadio.Visible = false;
+            firstDirectedRadio.Visible = false;
+            secondDirectedRadio.Visible = false;
+        }
+
+        private void TogglePropertyPanel()
+        {
+
+            if ((selected as Vertex) == null)
+            {
+                if (selected as Edge != null)
+                {
+                    PropertyPanelEdge();
+                    propertyPanel.Visible = true;
+                }
+                else
+                {
+                    PropertyPanelVertex();
+                    if ((hovered as Vertex) != null)
+                    {
+                        propertyPanel.Visible = true;
+                        nameTextBox.Text = (hovered as Vertex).Name;
+                    }
+                    else
+                        propertyPanel.Visible = false;
+                }
+            }
+            else
+            {
+                PropertyPanelVertex();
+                propertyPanel.Visible = true;
+                nameTextBox.Text = (selected as Vertex).Name;
+            }
+
+        }
+        //end of property panel appearance
+
 
         private void vertexModeButton_Click(object sender, EventArgs e)
         {
@@ -405,47 +456,37 @@ namespace wiercholki
             }
         }
 
+        /// <summary>
+        /// change edge direction to both sides radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bothDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graf.ChangeDirection(selected as Edge, Direction.Both);
+            graph.ChangeDirection(selected as Edge, Direction.Both);
             mainPanel.Refresh();
         }
 
+        /// <summary>
+        /// change edge direction to first vertex radio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void firstDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graf.ChangeDirection(selected as Edge, Direction.ToFirst);
+            graph.ChangeDirection(selected as Edge, Direction.ToFirst);
             mainPanel.Refresh();
         }
 
+        /// <summary>
+        /// change edge direction to second vertex readio button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void secondDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graf.ChangeDirection(selected as Edge, Direction.ToSecond);
-        }
-
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.ColumnIndex == -1 && e.RowIndex > -1)
-            {
-
-                e.PaintBackground(e.CellBounds, true);
-
-                using (SolidBrush br = new SolidBrush(Color.Black))
-                {
-
-                    StringFormat sf = new StringFormat();
-
-                    sf.Alignment = StringAlignment.Center;
-
-                    sf.LineAlignment = StringAlignment.Center;
-                    e.Graphics.DrawString(e.Value.ToString(),
-
-                    e.CellStyle.Font, br, e.CellBounds, sf);
-
-                }
-
-                e.Handled = true;
-
-            }
+            graph.ChangeDirection(selected as Edge, Direction.ToSecond);
+            mainPanel.Refresh();
         }
 
         private void calculateDistance_Click(object sender, EventArgs e)
@@ -461,14 +502,14 @@ namespace wiercholki
                     return;
                 }
                 int i = 1;
-                if (graf.Matrix[firstSelected.Id, secondSelected.Id] <= 0)
+                if (graph.Matrix[firstSelected.Id, secondSelected.Id] <= 0)
                 {
-                    var multiplied = graf.Matrix.MultiplyMatrix(graf.Matrix);
+                    var multiplied = graph.Matrix.MultiplyMatrix(graph.Matrix);
                     i++;
-                    while (multiplied[firstSelected.Id, secondSelected.Id] <= 0 && i < graf.wierzcholki.Count)
+                    while (multiplied[firstSelected.Id, secondSelected.Id] <= 0 && i < graph.wierzcholki.Count)
                     {
                         i++;
-                        multiplied = graf.Matrix.MultiplyMatrix(multiplied);
+                        multiplied = graph.Matrix.MultiplyMatrix(multiplied);
                     }
                     if (multiplied[firstSelected.Id, secondSelected.Id] == 0)
                     {
@@ -478,28 +519,134 @@ namespace wiercholki
                 MessageBox.Show("Odległość wynosi: " + i.ToString() + ".");
             }
         }
-    }
 
-    class Alphabet
-    {
-        private List<char> alfabet;
-        public int Current { get; set; }
-        private int index;
-
-        public Alphabet()
+        /// <summary>
+        /// Callback function - it updates graph's edges entered to matrix
+        /// BUGGED - feature disabled
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <param name="number"></param>
+        void UpdateEdges(int v1, int v2, int number)
         {
-            index = 0;
-            alfabet = new List<char>();
-            for (char z = 'A'; z <= 'Z'; z++)
+            //int needToAdd = Graph.
+            var relatedEdges = graph.krawedzie.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2));
+            var list = relatedEdges.ToList();
+
+            var firstVertex = graph.wierzcholki.FirstOrDefault(x => x.Id == v1);
+            var secondVertex = graph.wierzcholki.FirstOrDefault(x => x.Id == v2);
+
+            foreach (var edge in list)
             {
-                alfabet.Add(z);
+                graph.RemoveEdge(edge);
             }
-            Current = 0;
+
+            var oppositeSide = graph.Matrix[v2, v1];
+            Console.WriteLine("edited: " + number + ", opposite: " + oppositeSide);
+
+            if (oppositeSide == number)
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    Edge edge = new Edge();
+                    edge.FirstVertex = firstVertex;
+                    edge.SecondVertex = secondVertex;
+                    edge.Direction = Direction.Both;
+                    graph.AddEdge(edge);
+                }
+
+            }
+            if (oppositeSide < number)
+            {
+                for (int i = 0; i < oppositeSide; i++)
+                {
+                    Edge edge = new Edge();
+                    edge.FirstVertex = firstVertex;
+                    edge.SecondVertex = secondVertex;
+                    edge.Direction = Direction.Both;
+                    graph.AddEdge(edge);
+                }
+                for (int i = 0; i < number - oppositeSide; i++)
+                {
+                    Edge edge = new Edge();
+                    edge.FirstVertex = firstVertex;
+                    edge.SecondVertex = secondVertex;
+                    edge.Direction = Direction.ToFirst;
+                    graph.AddEdge(edge);
+                }
+            }
+            if (oppositeSide > number)
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    Edge edge = new Edge();
+                    edge.FirstVertex = firstVertex;
+                    edge.SecondVertex = secondVertex;
+                    edge.Direction = Direction.Both;
+                    graph.AddEdge(edge);
+                }
+                for (int i = 0; i < oppositeSide - number; i++)
+                {
+                    Edge edge = new Edge();
+                    edge.FirstVertex = firstVertex;
+                    edge.SecondVertex = secondVertex;
+                    edge.Direction = Direction.ToSecond;
+                    graph.AddEdge(edge);
+                }
+            }
+
+            mainPanel.Refresh();
         }
 
-        public string Next()
+        private void propertyPanel_MouseDown(object sender, MouseEventArgs e)
         {
-            return null;
+
+        }
+
+        private void propertyPanel_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void propertyPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void propertyPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+    }
+
+
+    /// <summary>
+    /// class for handling proper vertex names
+    /// </summary>
+    static class Alphabet
+    {
+        public static string GetNextBase26(string a)
+        {
+            return Base26Sequence().SkipWhile(x => x != a).Skip(1).First();
+        }
+
+        public static IEnumerable<string> Base26Sequence()
+        {
+            long i = 0L;
+            while (true)
+                yield return Base26Encode(i++);
+        }
+
+        private static char[] base26Chars = "abcdefghijklmnopqrstuvwxyz".ToUpper().ToCharArray();
+        public static string Base26Encode(Int64 value)
+        {
+            string returnValue = null;
+            do
+            {
+                returnValue = base26Chars[value % 26] + returnValue;
+                value /= 26;
+            } while (value-- != 0);
+            return returnValue;
         }
     }
 }

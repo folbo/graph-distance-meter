@@ -10,12 +10,16 @@ using System.Windows.Forms;
 
 namespace wiercholki
 {
+    public delegate void UpdateEdgesDelegate(int v1_id, int v2_id, int numberOfEdges);
+
     public partial class MatrixControl : UserControl
     {
+        public event UpdateEdgesDelegate UpdateEdges;
         public MatrixControl()
         {
             InitializeComponent();
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.ReadOnly = true;
         }
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -73,6 +77,24 @@ namespace wiercholki
                 dataGridView1.Rows.Add(datarow);
                 dataGridView1.Rows[i].Height = 20;
                 dataGridView1.Rows[i].HeaderCell.Value = verticles[i].Name.ToString();
+            }
+
+            dataGridView1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
+        }
+
+        private void dataGridView1_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //MessageBox.Show("oaa");
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1 && e.ColumnIndex != -1)
+            {
+                var value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                int val = Convert.ToInt32(value);
+                if(UpdateEdges != null)
+                    UpdateEdges(e.RowIndex, e.ColumnIndex, val);
             }
         }
     }

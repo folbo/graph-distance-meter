@@ -35,10 +35,7 @@
             this.vertexModeButton = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.newGraphButton = new System.Windows.Forms.Button();
-            this.openGraphButton = new System.Windows.Forms.Button();
-            this.saveGraphButton = new System.Windows.Forms.Button();
             this.mainPanel = new wiercholki.DisplayPanel();
-            this.matrixControl1 = new wiercholki.MatrixControl();
             this.propertyPanel = new System.Windows.Forms.Panel();
             this.secondDirectedRadio = new System.Windows.Forms.RadioButton();
             this.firstDirectedRadio = new System.Windows.Forms.RadioButton();
@@ -49,6 +46,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.matrixPanel = new System.Windows.Forms.Panel();
+            this.matrixControl1 = new wiercholki.MatrixControl();
             this.calculateDistance = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.vertex2ComboBox = new System.Windows.Forms.ComboBox();
@@ -96,7 +94,7 @@
             this.radioButton3.Appearance = System.Windows.Forms.Appearance.Button;
             this.radioButton3.AutoSize = true;
             this.radioButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.radioButton3.Location = new System.Drawing.Point(384, 0);
+            this.radioButton3.Location = new System.Drawing.Point(213, 0);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(60, 25);
             this.radioButton3.TabIndex = 4;
@@ -110,7 +108,7 @@
             this.edgeModeButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.edgeModeButton.AutoSize = true;
             this.edgeModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.edgeModeButton.Location = new System.Drawing.Point(239, 0);
+            this.edgeModeButton.Location = new System.Drawing.Point(111, 0);
             this.edgeModeButton.Name = "edgeModeButton";
             this.edgeModeButton.Size = new System.Drawing.Size(96, 25);
             this.edgeModeButton.TabIndex = 3;
@@ -124,7 +122,7 @@
             this.vertexModeButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.vertexModeButton.AutoSize = true;
             this.vertexModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.vertexModeButton.Location = new System.Drawing.Point(96, 0);
+            this.vertexModeButton.Location = new System.Drawing.Point(3, 0);
             this.vertexModeButton.Name = "vertexModeButton";
             this.vertexModeButton.Size = new System.Drawing.Size(102, 25);
             this.vertexModeButton.TabIndex = 2;
@@ -136,8 +134,6 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.newGraphButton);
-            this.flowLayoutPanel1.Controls.Add(this.openGraphButton);
-            this.flowLayoutPanel1.Controls.Add(this.saveGraphButton);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(517, 28);
@@ -153,24 +149,6 @@
             this.newGraphButton.UseVisualStyleBackColor = true;
             this.newGraphButton.Click += new System.EventHandler(this.newGraphButton_Click);
             // 
-            // openGraphButton
-            // 
-            this.openGraphButton.Location = new System.Drawing.Point(84, 3);
-            this.openGraphButton.Name = "openGraphButton";
-            this.openGraphButton.Size = new System.Drawing.Size(75, 23);
-            this.openGraphButton.TabIndex = 1;
-            this.openGraphButton.Text = "Otwórz";
-            this.openGraphButton.UseVisualStyleBackColor = true;
-            // 
-            // saveGraphButton
-            // 
-            this.saveGraphButton.Location = new System.Drawing.Point(165, 3);
-            this.saveGraphButton.Name = "saveGraphButton";
-            this.saveGraphButton.Size = new System.Drawing.Size(75, 23);
-            this.saveGraphButton.TabIndex = 2;
-            this.saveGraphButton.Text = "Zapisz";
-            this.saveGraphButton.UseVisualStyleBackColor = true;
-            // 
             // mainPanel
             // 
             this.mainPanel.Bitmap = null;
@@ -185,13 +163,6 @@
             this.mainPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseMove);
             this.mainPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseUp);
             // 
-            // matrixControl1
-            // 
-            this.matrixControl1.Location = new System.Drawing.Point(3, 4);
-            this.matrixControl1.Name = "matrixControl1";
-            this.matrixControl1.Size = new System.Drawing.Size(198, 167);
-            this.matrixControl1.TabIndex = 1;
-            // 
             // propertyPanel
             // 
             this.propertyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
@@ -204,13 +175,13 @@
             this.propertyPanel.Controls.Add(this.nameTextBox);
             this.propertyPanel.Location = new System.Drawing.Point(324, 3);
             this.propertyPanel.Name = "propertyPanel";
-            this.propertyPanel.Size = new System.Drawing.Size(185, 109);
+            this.propertyPanel.Size = new System.Drawing.Size(185, 95);
             this.propertyPanel.TabIndex = 0;
             // 
             // secondDirectedRadio
             // 
             this.secondDirectedRadio.AutoSize = true;
-            this.secondDirectedRadio.Location = new System.Drawing.Point(66, 75);
+            this.secondDirectedRadio.Location = new System.Drawing.Point(66, 68);
             this.secondDirectedRadio.Name = "secondDirectedRadio";
             this.secondDirectedRadio.Size = new System.Drawing.Size(83, 17);
             this.secondDirectedRadio.TabIndex = 5;
@@ -222,7 +193,7 @@
             // firstDirectedRadio
             // 
             this.firstDirectedRadio.AutoSize = true;
-            this.firstDirectedRadio.Location = new System.Drawing.Point(66, 52);
+            this.firstDirectedRadio.Location = new System.Drawing.Point(66, 45);
             this.firstDirectedRadio.Name = "firstDirectedRadio";
             this.firstDirectedRadio.Size = new System.Drawing.Size(95, 17);
             this.firstDirectedRadio.TabIndex = 4;
@@ -234,7 +205,7 @@
             // bothDirectedRadio
             // 
             this.bothDirectedRadio.AutoSize = true;
-            this.bothDirectedRadio.Location = new System.Drawing.Point(66, 29);
+            this.bothDirectedRadio.Location = new System.Drawing.Point(66, 22);
             this.bothDirectedRadio.Name = "bothDirectedRadio";
             this.bothDirectedRadio.Size = new System.Drawing.Size(78, 17);
             this.bothDirectedRadio.TabIndex = 3;
@@ -255,7 +226,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(3, 29);
+            this.nameLabel.Location = new System.Drawing.Point(3, 22);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(40, 13);
             this.nameLabel.TabIndex = 1;
@@ -263,9 +234,9 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(49, 26);
+            this.nameTextBox.Location = new System.Drawing.Point(49, 19);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(122, 20);
+            this.nameTextBox.Size = new System.Drawing.Size(51, 20);
             this.nameTextBox.TabIndex = 0;
             this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
@@ -299,6 +270,13 @@
             this.matrixPanel.Name = "matrixPanel";
             this.matrixPanel.Size = new System.Drawing.Size(206, 252);
             this.matrixPanel.TabIndex = 6;
+            // 
+            // matrixControl1
+            // 
+            this.matrixControl1.Location = new System.Drawing.Point(3, 4);
+            this.matrixControl1.Name = "matrixControl1";
+            this.matrixControl1.Size = new System.Drawing.Size(198, 167);
+            this.matrixControl1.TabIndex = 1;
             // 
             // calculateDistance
             // 
@@ -362,10 +340,8 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button openGraphButton;
         private System.Windows.Forms.Button newGraphButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button saveGraphButton;
         private DisplayPanel mainPanel;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton edgeModeButton;

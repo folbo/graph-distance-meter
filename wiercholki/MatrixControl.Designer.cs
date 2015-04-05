@@ -40,7 +40,9 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(208, 189);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellErrorTextChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellErrorTextChanged);
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // MatrixControl
             // 
