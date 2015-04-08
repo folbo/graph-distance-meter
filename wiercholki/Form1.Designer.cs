@@ -34,10 +34,8 @@
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.edgeModeButton = new System.Windows.Forms.RadioButton();
             this.vertexModeButton = new System.Windows.Forms.RadioButton();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.newGraphButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.matrixPanel = new System.Windows.Forms.Panel();
             this.calculateDistance = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,6 +43,7 @@
             this.vertex1ComboBox = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.mainPanel = new wiercholki.DisplayPanel();
             this.propertyPanel = new System.Windows.Forms.Panel();
             this.secondDirectedRadio = new System.Windows.Forms.RadioButton();
@@ -56,10 +55,9 @@
             this.matrixControl1 = new wiercholki.MatrixControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.matrixPanel.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.propertyPanel.SuspendLayout();
             this.SuspendLayout();
@@ -70,18 +68,18 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 212F));
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.mainPanel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.matrixPanel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.78788F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.21212F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(735, 377);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.82089F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.1791F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(735, 376);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel2
@@ -90,7 +88,7 @@
             this.panel2.Controls.Add(this.radioButton3);
             this.panel2.Controls.Add(this.edgeModeButton);
             this.panel2.Controls.Add(this.vertexModeButton);
-            this.panel2.Location = new System.Drawing.Point(3, 307);
+            this.panel2.Location = new System.Drawing.Point(3, 297);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(517, 67);
             this.panel2.TabIndex = 1;
@@ -147,18 +145,10 @@
             this.vertexModeButton.UseVisualStyleBackColor = true;
             this.vertexModeButton.Click += new System.EventHandler(this.vertexModeButton_Click);
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.newGraphButton);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(517, 28);
-            this.flowLayoutPanel1.TabIndex = 2;
-            // 
             // newGraphButton
             // 
             this.newGraphButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.newGraphButton.Location = new System.Drawing.Point(3, 3);
+            this.newGraphButton.Location = new System.Drawing.Point(3, 8);
             this.newGraphButton.Name = "newGraphButton";
             this.newGraphButton.Size = new System.Drawing.Size(76, 23);
             this.newGraphButton.TabIndex = 0;
@@ -168,20 +158,10 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(526, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(206, 28);
+            this.panel1.Size = new System.Drawing.Size(206, 35);
             this.panel1.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Macierz sąsiedztwa";
             // 
             // matrixPanel
             // 
@@ -192,9 +172,9 @@
             this.matrixPanel.Controls.Add(this.label2);
             this.matrixPanel.Controls.Add(this.vertex2ComboBox);
             this.matrixPanel.Controls.Add(this.vertex1ComboBox);
-            this.matrixPanel.Location = new System.Drawing.Point(526, 37);
+            this.matrixPanel.Location = new System.Drawing.Point(526, 44);
             this.matrixPanel.Name = "matrixPanel";
-            this.matrixPanel.Size = new System.Drawing.Size(206, 252);
+            this.matrixPanel.Size = new System.Drawing.Size(206, 247);
             this.matrixPanel.TabIndex = 6;
             // 
             // calculateDistance
@@ -236,9 +216,9 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.button1);
-            this.panel3.Location = new System.Drawing.Point(526, 307);
+            this.panel3.Location = new System.Drawing.Point(526, 297);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 67);
+            this.panel3.Size = new System.Drawing.Size(200, 76);
             this.panel3.TabIndex = 7;
             // 
             // button1
@@ -251,14 +231,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.newGraphButton);
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(517, 35);
+            this.panel4.TabIndex = 8;
+            // 
             // mainPanel
             // 
             this.mainPanel.Bitmap = null;
             this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainPanel.Controls.Add(this.propertyPanel);
-            this.mainPanel.Location = new System.Drawing.Point(3, 37);
+            this.mainPanel.Location = new System.Drawing.Point(3, 44);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(517, 251);
+            this.mainPanel.Size = new System.Drawing.Size(517, 247);
             this.mainPanel.TabIndex = 3;
             this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             this.mainPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainPanel_MouseDown);
@@ -353,7 +341,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 392);
+            this.ClientSize = new System.Drawing.Size(759, 395);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Obliczanie odległości między wierzchołkami grafu";
@@ -361,12 +349,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.matrixPanel.ResumeLayout(false);
             this.matrixPanel.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.mainPanel.ResumeLayout(false);
             this.propertyPanel.ResumeLayout(false);
             this.propertyPanel.PerformLayout();
@@ -379,7 +365,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button newGraphButton;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private DisplayPanel mainPanel;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton edgeModeButton;
@@ -392,7 +377,6 @@
         private System.Windows.Forms.RadioButton secondDirectedRadio;
         private System.Windows.Forms.RadioButton firstDirectedRadio;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel matrixPanel;
         private System.Windows.Forms.ComboBox vertex1ComboBox;
         private System.Windows.Forms.ComboBox vertex2ComboBox;
@@ -402,6 +386,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
 
     }
 }
