@@ -134,7 +134,6 @@
             this.label2.Size = new System.Drawing.Size(195, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Oblicz odległość między wierzchołkami:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // vertex2ComboBox
             // 
@@ -184,7 +183,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(87, 273);
             this.panel1.TabIndex = 8;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label1
             // 
@@ -370,7 +368,6 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Obliczanie odległości między wierzchołkami grafu";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

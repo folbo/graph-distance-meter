@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alphabet.cs" />
     <Compile Include="DisplayPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -68,6 +69,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Edge.cs" />
+    <Compile Include="Logic\Graph.cs" />
+    <Compile Include="Logic\Vertex.cs" />
     <Compile Include="Mathematics.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="MatrixControl.cs">

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using wiercholki.Logic;
 
 namespace wiercholki
 {
@@ -14,7 +15,7 @@ namespace wiercholki
         private InputState state;
         private Graph graph;
 
-        private Point mouse;
+        private myPoint mouse;
 
         private object hovered;
         private object selected;
@@ -33,7 +34,7 @@ namespace wiercholki
             state = InputState.NoInput;
 
             mainPanel.Bitmap = new Bitmap(mainPanel.Width, mainPanel.Height);
-            mouse = new Point();
+            mouse = new myPoint();
 
             propertyPanel.Visible = false;
 
@@ -537,6 +538,7 @@ namespace wiercholki
                     MessageBox.Show("Szukana odległość wynosi: " + zero.ToString() + ".\n\nZ definicji, ponieważ odniesienie do tego samego wierzchołka.");
                     return;
                 }
+
                 int i = 1;
                 if (graph.Matrix[firstSelected.Id, secondSelected.Id] <= 0)
                 {
@@ -558,12 +560,11 @@ namespace wiercholki
 
         /// <summary>
         /// Callback function - it updates graph's edges entered to matrix
-        /// BUGGED - feature disabled
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <param name="number"></param>
-        void UpdateEdges(int v2, int v1, int number)
+        void UpdateEdges(int v1, int v2, int number)
         {
             //int needToAdd = Graph.
             var relatedEdges = graph.edges.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2) || (x.FirstVertex.Id == v2 && x.SecondVertex.Id == v1));
@@ -574,14 +575,15 @@ namespace wiercholki
 
             foreach (var edge in list)
             {
-                graph.RemoveEdge(edge);
+                graph.RemoveEdge(edge, false);
             }
 
             graph.Matrix[v1, v2] = number;
+            //matrixControl1.LoadMatrix(graph.Matrix, graph.verticles);
             var oppositeSide = graph.Matrix[v2, v1];
             
             Console.WriteLine(v1 + " " + v2 + " edited: " + graph.Matrix[v1, v2] + ", opposite: " + graph.Matrix[v2, v1]);
-
+            
             if (oppositeSide == number)
             {
                 for (int i = 0; i < number; i++)
@@ -590,7 +592,7 @@ namespace wiercholki
                     edge.FirstVertex = firstVertex;
                     edge.SecondVertex = secondVertex;
                     edge.Direction = Direction.Both;
-                    graph.AddEdge(edge);
+                    graph.AddEdge(edge, false);
                 }
 
             }
@@ -602,15 +604,15 @@ namespace wiercholki
                     edge.FirstVertex = firstVertex;
                     edge.SecondVertex = secondVertex;
                     edge.Direction = Direction.Both;
-                    graph.AddEdge(edge);
+                    graph.AddEdge(edge, false);
                 }
                 for (int i = 0; i < number - oppositeSide; i++)
                 {
                     Edge edge = new Edge();
                     edge.FirstVertex = firstVertex;
                     edge.SecondVertex = secondVertex;
-                    edge.Direction = Direction.ToFirst;
-                    graph.AddEdge(edge);
+                    edge.Direction = Direction.ToSecond;
+                    graph.AddEdge(edge, false);
                 }
             }
             if (oppositeSide > number)
@@ -621,45 +623,24 @@ namespace wiercholki
                     edge.FirstVertex = firstVertex;
                     edge.SecondVertex = secondVertex;
                     edge.Direction = Direction.Both;
-                    graph.AddEdge(edge);
+                    graph.AddEdge(edge, false);
                 }
                 for (int i = 0; i < oppositeSide - number; i++)
                 {
                     Edge edge = new Edge();
                     edge.FirstVertex = firstVertex;
                     edge.SecondVertex = secondVertex;
-                    edge.Direction = Direction.ToSecond;
-                    graph.AddEdge(edge);
+                    edge.Direction = Direction.ToFirst;
+                    graph.AddEdge(edge, false);
                 }
             }
- 
 
             mainPanel.Refresh();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
             System.Environment.Exit(-1);
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -692,39 +673,7 @@ namespace wiercholki
                 {
                     MessageBox.Show("Waga jest liczbą!");
                 }
-                
             }
-        }
-    }
-
-
-    /// <summary>
-    /// class for handling proper vertex names
-    /// </summary>
-    static class Alphabet
-    {
-        public static string GetNextBase26(string a)
-        {
-            return Base26Sequence().SkipWhile(x => x != a).Skip(1).First();
-        }
-
-        public static IEnumerable<string> Base26Sequence()
-        {
-            long i = 0L;
-            while (true)
-                yield return Base26Encode(i++);
-        }
-
-        private static char[] base26Chars = "abcdefghijklmnopqrstuvwxyz".ToUpper().ToCharArray();
-        public static string Base26Encode(Int64 value)
-        {
-            string returnValue = null;
-            do
-            {
-                returnValue = base26Chars[value % 26] + returnValue;
-                value /= 26;
-            } while (value-- != 0);
-            return returnValue;
         }
     }
 }
