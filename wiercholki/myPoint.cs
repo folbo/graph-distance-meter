@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using wiercholki.Logic;
 
 namespace wiercholki
 {
-    public enum Direction { Both, ToFirst, ToSecond };
-
     public class myPoint
     {
         public myPoint()
@@ -112,6 +112,4 @@ namespace wiercholki
             return Math.Abs(dist);
         }
     }
-    
-   
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wiercholki.Logic
+﻿namespace wiercholki.Logic
 {
+    public enum Direction { Both, ToFirst, ToSecond };
+
     public class Edge
     {
         public Edge(int weight = 1)
