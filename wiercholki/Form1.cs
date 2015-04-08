@@ -39,6 +39,8 @@ namespace wiercholki
 
             nextVerticleText = "A";
             matrixControl1.UpdateEdges += UpdateEdges;
+
+            vertexModeButton_Click(null, null);
         }
 
         private System.Drawing.Point? clickPosition;
@@ -637,9 +639,30 @@ namespace wiercholki
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
             System.Environment.Exit(-1);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("JD&KR Crew, 2015");
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+           // MessageBox.Show("")
+            if (MessageBox.Show(
+                    "Pewien?", "EasterEgg!", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk
+                    ) == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start("http://i1.kwejk.pl/k/obrazki/2014/11/ce61ca4c882f361c771673ced5c96281.jpg");
+            }
         }
     }
 

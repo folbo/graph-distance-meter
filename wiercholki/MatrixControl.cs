@@ -19,7 +19,7 @@ namespace wiercholki
         {
             InitializeComponent();
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.ReadOnly = true;
+            //dataGridView1.ReadOnly = true;
         }
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {

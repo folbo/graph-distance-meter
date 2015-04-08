@@ -177,7 +177,7 @@ namespace wiercholki
                 matrix[elem.SecondVertex.Id, elem.FirstVertex.Id] += 1;
             }
 
-            matrix.Show();
+            //matrix.Show();
         }
 
         public void RemoveEdge(Edge elem)
@@ -255,7 +255,7 @@ namespace wiercholki
             }
             edge.Direction = dir;
 
-            matrix.Show();
+            //matrix.Show();
         }
 
         public Edge FindNearestEdge(int x, int y, int range)
