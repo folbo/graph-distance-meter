@@ -64,12 +64,15 @@ namespace wiercholki
         private Matrix matrix;
         public Matrix Matrix { get { return matrix; } }
 
+        public int maxWeight;
+
         public Graph()
         {
             verticles = new List<Vertex>();
             edges = new List<Edge>();
 
             matrix = new Matrix();
+            maxWeight = 10;
         }
         public void AddVertex(Vertex elem)
         {

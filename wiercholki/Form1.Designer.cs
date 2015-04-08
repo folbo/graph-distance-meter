@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.mainPanel = new wiercholki.DisplayPanel();
             this.propertyPanel = new System.Windows.Forms.Panel();
+            this.weightTextBox = new System.Windows.Forms.TextBox();
             this.secondDirectedRadio = new System.Windows.Forms.RadioButton();
             this.firstDirectedRadio = new System.Windows.Forms.RadioButton();
             this.bothDirectedRadio = new System.Windows.Forms.RadioButton();
@@ -55,7 +56,6 @@
             this.button1_1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.weightTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -227,6 +227,14 @@
             this.propertyPanel.Size = new System.Drawing.Size(185, 95);
             this.propertyPanel.TabIndex = 0;
             // 
+            // weightTextBox
+            // 
+            this.weightTextBox.Location = new System.Drawing.Point(6, 65);
+            this.weightTextBox.Name = "weightTextBox";
+            this.weightTextBox.Size = new System.Drawing.Size(54, 20);
+            this.weightTextBox.TabIndex = 6;
+            this.weightTextBox.TextChanged += new System.EventHandler(this.weightTextBox_TextChanged);
+            // 
             // secondDirectedRadio
             // 
             this.secondDirectedRadio.AutoSize = true;
@@ -347,13 +355,6 @@
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
-            // 
-            // weightTextBox
-            // 
-            this.weightTextBox.Location = new System.Drawing.Point(6, 65);
-            this.weightTextBox.Name = "weightTextBox";
-            this.weightTextBox.Size = new System.Drawing.Size(54, 20);
-            this.weightTextBox.TabIndex = 6;
             // 
             // Form1
             // 

@@ -322,7 +322,7 @@ namespace wiercholki
                     foreach (var edge in graph.edges)
                     {
 
-                        using (var pen = new System.Drawing.Pen(System.Drawing.Color.Black, 1))
+                        using (var pen = new System.Drawing.Pen(Mathematics.ColorBlend(Color.Blue, Color.Red, (float)edge.Weight/graph.maxWeight), 1))
                         {
                             if (edge.Direction == Direction.ToFirst)
                             {
@@ -393,6 +393,7 @@ namespace wiercholki
             bothDirectedRadio.Visible = true;
             firstDirectedRadio.Visible = true;
             secondDirectedRadio.Visible = true;
+            weightTextBox.Visible = true;
 
             if ((selected as Edge) != null)
             {
@@ -402,6 +403,9 @@ namespace wiercholki
                     firstDirectedRadio.Checked = true;
                 if ((selected as Edge).Direction == Direction.ToSecond)
                     secondDirectedRadio.Checked = true;
+
+                weightTextBox.Text = (selected as Edge).Weight.ToString();
+
 
                 //update labels
                 firstDirectedRadio.Text = "Do " + (selected as Edge).FirstVertex.Name;
@@ -420,6 +424,7 @@ namespace wiercholki
             bothDirectedRadio.Visible = false;
             firstDirectedRadio.Visible = false;
             secondDirectedRadio.Visible = false;
+            weightTextBox.Visible = false;
         }
 
         private void TogglePropertyPanel()
@@ -670,6 +675,24 @@ namespace wiercholki
                     ) == DialogResult.Yes)
             {
                 System.Diagnostics.Process.Start("http://i1.kwejk.pl/k/obrazki/2014/11/ce61ca4c882f361c771673ced5c96281.jpg");
+            }
+        }
+
+        private void weightTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (selected as Edge != null)
+            {
+                try
+                {
+                    int weight = Convert.ToInt16(weightTextBox.Text);
+                    (selected as Edge).Weight = weight;
+                    if (graph.maxWeight < weight) graph.maxWeight = weight;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Waga jest liczbą!");
+                }
+                
             }
         }
     }
