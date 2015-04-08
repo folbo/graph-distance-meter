@@ -55,6 +55,7 @@
             this.button1_1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.weightTextBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -214,6 +215,7 @@
             this.propertyPanel.BackColor = System.Drawing.Color.White;
             this.propertyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.propertyPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.propertyPanel.Controls.Add(this.weightTextBox);
             this.propertyPanel.Controls.Add(this.secondDirectedRadio);
             this.propertyPanel.Controls.Add(this.firstDirectedRadio);
             this.propertyPanel.Controls.Add(this.bothDirectedRadio);
@@ -346,6 +348,13 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
+            // weightTextBox
+            // 
+            this.weightTextBox.Location = new System.Drawing.Point(6, 65);
+            this.weightTextBox.Name = "weightTextBox";
+            this.weightTextBox.Size = new System.Drawing.Size(54, 20);
+            this.weightTextBox.TabIndex = 6;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -405,6 +414,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox weightTextBox;
 
     }
 }

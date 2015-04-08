@@ -393,6 +393,7 @@ namespace wiercholki
             bothDirectedRadio.Visible = true;
             firstDirectedRadio.Visible = true;
             secondDirectedRadio.Visible = true;
+
             if ((selected as Edge) != null)
             {
                 if ((selected as Edge).Direction == Direction.Both)
@@ -401,6 +402,10 @@ namespace wiercholki
                     firstDirectedRadio.Checked = true;
                 if ((selected as Edge).Direction == Direction.ToSecond)
                     secondDirectedRadio.Checked = true;
+
+                //update labels
+                firstDirectedRadio.Text = "Do " + (selected as Edge).FirstVertex.Name;
+                secondDirectedRadio.Text = "Do " + (selected as Edge).SecondVertex.Name;
             }
         }
 
@@ -553,10 +558,10 @@ namespace wiercholki
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <param name="number"></param>
-        void UpdateEdges(int v1, int v2, int number)
+        void UpdateEdges(int v2, int v1, int number)
         {
             //int needToAdd = Graph.
-            var relatedEdges = graph.edges.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2));
+            var relatedEdges = graph.edges.Where(x => (x.FirstVertex.Id == v1 && x.SecondVertex.Id == v2) || (x.FirstVertex.Id == v2 && x.SecondVertex.Id == v1));
             var list = relatedEdges.ToList();
 
             var firstVertex = graph.verticles.FirstOrDefault(x => x.Id == v1);
@@ -567,8 +572,10 @@ namespace wiercholki
                 graph.RemoveEdge(edge);
             }
 
+            graph.Matrix[v1, v2] = number;
             var oppositeSide = graph.Matrix[v2, v1];
-            Console.WriteLine("edited: " + number + ", opposite: " + oppositeSide);
+            
+            Console.WriteLine(v1 + " " + v2 + " edited: " + graph.Matrix[v1, v2] + ", opposite: " + graph.Matrix[v2, v1]);
 
             if (oppositeSide == number)
             {
@@ -620,6 +627,7 @@ namespace wiercholki
                     graph.AddEdge(edge);
                 }
             }
+ 
 
             mainPanel.Refresh();
         }
