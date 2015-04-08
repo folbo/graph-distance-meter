@@ -262,7 +262,11 @@ namespace wiercholki
             graph = new Graph();
             mainPanel.Refresh();
             nextVerticleText = "A";
+            matrixControl1.ResetMatrix();
             matrixControl1.Refresh();
+
+            vertex1ComboBox.Items.Clear();
+            vertex2ComboBox.Items.Clear();
         }
 
         private void mainPanel_Paint(object sender, PaintEventArgs e)
@@ -518,7 +522,7 @@ namespace wiercholki
                 if (firstSelected == secondSelected)
                 {
                     int zero = 0;
-                    MessageBox.Show("Odległość wynosi: " + zero.ToString() + ".\n\nZ definicji, ponieważ odniesienie do tego samego wierzchołka.");
+                    MessageBox.Show("Szukana odległość wynosi: " + zero.ToString() + ".\n\nZ definicji, ponieważ odniesienie do tego samego wierzchołka.");
                     return;
                 }
                 int i = 1;
@@ -536,7 +540,7 @@ namespace wiercholki
                         i = 0;
                     }
                 }
-                MessageBox.Show("Odległość wynosi: " + i.ToString() + ".");
+                MessageBox.Show("Szukana odległość wynosi: " + i.ToString() + ".");
             }
         }
 
@@ -616,6 +620,26 @@ namespace wiercholki
             }
 
             mainPanel.Refresh();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            System.Environment.Exit(-1);
         }
     }
 

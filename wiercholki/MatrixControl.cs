@@ -97,5 +97,11 @@ namespace wiercholki
                     UpdateEdges(e.RowIndex, e.ColumnIndex, val);
             }
         }
+
+        public void ResetMatrix()
+        {
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+        }
     }
 }
