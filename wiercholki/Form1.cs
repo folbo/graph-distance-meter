@@ -176,6 +176,7 @@ namespace wiercholki
             graph.SelectedVertex = selected as Vertex;
             graph.HoveredEdge = hovered as Edge;
             graph.HoveredVertex = hovered as Vertex;
+            graph.edgeInBuild = edgeInBuild;
         }
 
         private void mainPanel_MouseMove(object sender, MouseEventArgs e)
@@ -282,12 +283,10 @@ namespace wiercholki
             {
                 using (var graphics = Graphics.FromImage(mainPanel.Bitmap))
                 {
-                    
                     UpdateGraphFromInput();
 
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     graphics.Clear(Color.DarkGray);
-
 
                     graph.PaintGraph(graphics, mouse);
                 }
