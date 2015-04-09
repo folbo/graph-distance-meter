@@ -27,6 +27,8 @@ namespace wiercholki
         int dX;
         int dY;
 
+        
+
         public Form1()
         {
             InitializeComponent();
@@ -54,11 +56,7 @@ namespace wiercholki
                         //dodaj wierzchołek
                         if (e.Button == MouseButtons.Left)
                         {
-                            Vertex v = new Vertex();
-                            v.X = e.X;
-                            v.Y = e.Y;
-                            v.Size = 10;
-                            v.Name = nextVerticleText;
+                            Vertex v = new Vertex(e.X, e.Y, 10, nextVerticleText);
                             graph.AddVertex(v);
 
                             selected = v;
@@ -96,15 +94,14 @@ namespace wiercholki
                                 //rozpocznij rysowanie od wierzchołka
                                 if (edgeInBuild == null)
                                 {
-                                    edgeInBuild = new Edge();
-                                    edgeInBuild.FirstVertex = hovered as Vertex;
-                                    edgeInBuild.Direction = Direction.Both;
+                                    edgeInBuild = new Edge(hovered as Vertex, null, Direction.Both);
                                 }
                                 //koncz rysowanie
                                 else
                                 {
                                     edgeInBuild.SecondVertex = hovered as Vertex;
                                     graph.AddEdge(edgeInBuild);
+
                                     edgeInBuild = null;
                                 }
 
@@ -173,12 +170,20 @@ namespace wiercholki
             }
         }
 
+        void UpdateGraphFromInput()
+        {
+            graph.SelectedEdge = selected as Edge;
+            graph.SelectedVertex = selected as Vertex;
+            graph.HoveredEdge = hovered as Edge;
+            graph.HoveredVertex = hovered as Vertex;
+        }
 
         private void mainPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (graph != null)
             {
                 hovered = graph.FindNearestVertex(e.X, e.Y, 50);
+                
                 if ((hovered as Vertex) == null)
                     hovered = graph.FindNearestEdge(e.X, e.Y, 10);
 
@@ -277,107 +282,14 @@ namespace wiercholki
             {
                 using (var graphics = Graphics.FromImage(mainPanel.Bitmap))
                 {
+                    
+                    UpdateGraphFromInput();
+
                     graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     graphics.Clear(Color.DarkGray);
 
-                    foreach (var vertex in graph.verticles)
-                    {
-                        var X = vertex.X - vertex.Size / 2;
-                        var Y = vertex.Y - vertex.Size / 2;
-                        
-                        graphics.DrawEllipse(System.Drawing.Pens.Indigo, X, Y, vertex.Size, vertex.Size);
-                        FontFamily fontFamily = new FontFamily("Times New Roman");
-                        Font font = new Font(
-                           fontFamily,
-                           12,
-                           FontStyle.Regular,
-                           GraphicsUnit.Pixel);
 
-                        graphics.DrawString(vertex.Name, font, Brushes.Black, new PointF(vertex.X - 20, vertex.Y - 20));
-
-                        
-                        
-                        
-                        //najpierw pokoloruj zaznaczony, potem obsłuż hover
-                        if (vertex == selected as Vertex)
-                        {
-                            using (Brush brush = new SolidBrush(Color.FromArgb(200, 200, 60, 40)))
-                            {
-                                // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
-                                //vertex.Size + 1, vertex.Size + 1);
-                                graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
-                            }
-                        }
-                        //as vertex
-                        if (vertex == hovered)
-                        {
-                            using (Brush brush = new SolidBrush(Color.FromArgb(100, 20, 60, 200)))
-                            {
-                                // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
-                                //vertex.Size + 1, vertex.Size + 1);
-                                graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
-                            }
-                        }
-                    }
-                    foreach (var edge in graph.edges)
-                    {
-
-                        using (var pen = new System.Drawing.Pen(Mathematics.ColorBlend(Color.Blue, Color.Red, (float)edge.Weight/graph.maxWeight), 1))
-                        {
-                            if (edge.Direction == Direction.ToFirst)
-                            {
-                                AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
-                                cap.Filled = true;
-                                pen.CustomStartCap = cap;
-                            }
-                            if (edge.Direction == Direction.ToSecond)
-                            {
-                                AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
-                                cap.Filled = true;
-                                pen.CustomEndCap = cap;
-                            }
-
-                            graphics.DrawPath(pen, edge.Path);
-                        }
-                        //as edge
-                        if (edge == hovered && edgeInBuild == null)
-                        {
-                            using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
-                            {
-                                graphics.DrawPath(pen, edge.Path);
-                            }
-                        }
-                        if (edge == selected as Edge)
-                        {
-                            using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
-                            {
-                                graphics.DrawPath(pen, edge.Path);
-                            }
-                        }
-                    }
-
-                    //jesli jakas krawedz jest w budowie
-                    if (edgeInBuild != null)
-                    {
-                        //magnetic
-                        if ((hovered as Vertex) != null)
-                        {
-                            using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
-                            {
-                                graphics.DrawLine(pen, edgeInBuild.FirstVertex.X, edgeInBuild.FirstVertex.Y,
-                                    (hovered as Vertex).X, (hovered as Vertex).Y);
-                            }
-                        }
-                        //free move
-                        else
-                        {
-                            using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 1))
-                            {
-                                graphics.DrawLine(pen, edgeInBuild.FirstVertex.X, edgeInBuild.FirstVertex.Y,
-                                    mouse.X, mouse.Y);
-                            }
-                        }
-                    }
+                    graph.PaintGraph(graphics, mouse);
                 }
             }
         }
@@ -674,5 +586,6 @@ namespace wiercholki
                 }
             }
         }
+
     }
 }

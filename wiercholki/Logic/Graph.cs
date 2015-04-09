@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 
 namespace wiercholki.Logic
@@ -13,6 +15,17 @@ namespace wiercholki.Logic
         public Matrix Matrix { get { return matrix; } }
 
         public int maxWeight;
+
+        public object selected;
+        public object hovered;
+
+        public Edge edgeInBuild;
+
+        public Vertex HoveredVertex;
+        public Edge HoveredEdge;
+
+        public Vertex SelectedVertex;
+        public Edge SelectedEdge;
 
         public Graph()
         {
@@ -239,5 +252,115 @@ namespace wiercholki.Logic
             var mouse = new System.Drawing.Point(x, y);
             return edges.FirstOrDefault(edge => edge.Path.IsOutlineVisible(mouse, new System.Drawing.Pen(System.Drawing.Color.Black, range)));
         }
+
+
+        void PaintVerticles(Graphics graphics)
+        {
+            foreach (var vertex in verticles)
+            {
+                var X = vertex.X - vertex.Size / 2;
+                var Y = vertex.Y - vertex.Size / 2;
+
+                graphics.DrawEllipse(System.Drawing.Pens.Indigo, X, Y, vertex.Size, vertex.Size);
+                FontFamily fontFamily = new FontFamily("Times New Roman");
+                Font font = new Font(
+                   fontFamily,
+                   12,
+                   FontStyle.Regular,
+                   GraphicsUnit.Pixel);
+
+                graphics.DrawString(vertex.Name, font, Brushes.Black, new PointF(vertex.X - 20, vertex.Y - 20));
+
+                //najpierw pokoloruj zaznaczony, potem obsłuż hover
+                if (vertex == SelectedVertex)
+                {
+                    using (Brush brush = new SolidBrush(Color.FromArgb(200, 200, 60, 40)))
+                    {
+                        // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
+                        //vertex.Size + 1, vertex.Size + 1);
+                        graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
+                    }
+                }
+                //as vertex
+                if (vertex == HoveredVertex)
+                {
+                    using (Brush brush = new SolidBrush(Color.FromArgb(100, 20, 60, 200)))
+                    {
+                        // graphics.FillRectangle(brush, vertex.X - vertex.Size / 2, vertex.Y - vertex.Size / 2,
+                        //vertex.Size + 1, vertex.Size + 1);
+                        graphics.FillEllipse(brush, X, Y, vertex.Size, vertex.Size);
+                    }
+                }
+            }
+        }
+
+        void PaintEdges(Graphics graphics)
+        {
+            foreach (var edge in edges)
+            {
+
+                using (var pen = new System.Drawing.Pen(Mathematics.ColorBlend(Color.Blue, Color.Red, (float)edge.Weight / maxWeight), 1))
+                {
+                    if (edge.Direction == Direction.ToFirst)
+                    {
+                        AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
+                        cap.Filled = true;
+                        pen.CustomStartCap = cap;
+                    }
+                    if (edge.Direction == Direction.ToSecond)
+                    {
+                        AdjustableArrowCap cap = new AdjustableArrowCap(3, 7);
+                        cap.Filled = true;
+                        pen.CustomEndCap = cap;
+                    }
+
+                    graphics.DrawPath(pen, edge.Path);
+                }
+                //as edge
+                if (edge == HoveredEdge && edgeInBuild == null)
+                {
+                    using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
+                    {
+                        graphics.DrawPath(pen, edge.Path);
+                    }
+                }
+                if (edge == SelectedEdge)
+                {
+                    using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
+                    {
+                        graphics.DrawPath(pen, edge.Path);
+                    }
+                }
+            }
+        }
+
+        public void PaintGraph(Graphics graphics, myPoint mouse)
+        {
+            PaintVerticles(graphics);
+            PaintEdges(graphics);
+
+            if (edgeInBuild != null)
+            {
+                //magnetic
+                if ((HoveredVertex) != null)
+                {
+                    using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 4))
+                    {
+                        graphics.DrawLine(pen, edgeInBuild.FirstVertex.X, edgeInBuild.FirstVertex.Y,
+                            (HoveredVertex).X, (HoveredVertex).Y);
+                    }
+                }
+                //free move
+                else
+                {
+                    using (var pen = new System.Drawing.Pen(Color.FromArgb(100, 20, 60, 200), 1))
+                    {
+                        graphics.DrawLine(pen, edgeInBuild.FirstVertex.X, edgeInBuild.FirstVertex.Y,
+                            mouse.X, mouse.Y);
+                    }
+                }
+            }
+        }
+
     }
 }
