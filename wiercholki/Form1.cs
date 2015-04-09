@@ -7,7 +7,7 @@ using wiercholki.Logic;
 
 namespace wiercholki
 {
-    enum InputState { DrawVertex, DrawEdge, MoveVertex, NoInput, MovePropertyPanel }
+    enum InputState { DrawVertex, DrawEdge, MoveVertex, NoInput }
 
     public partial class Form1 : Form
     {
@@ -20,7 +20,7 @@ namespace wiercholki
         private object selected;
 
         //edge-build stage
-        private Edge edgeInBuild;
+        //private Edge edgeInBuild;
 
         private string nextVerticleText;
 
@@ -92,17 +92,17 @@ namespace wiercholki
                             if (hovered as Vertex != null)
                             {
                                 //rozpocznij rysowanie od wierzchołka
-                                if (edgeInBuild == null)
+                                if (graph.edgeInBuild == null)
                                 {
-                                    edgeInBuild = new Edge(hovered as Vertex, null, Direction.Both);
+                                    graph.edgeInBuild = new Edge(hovered as Vertex, null, Direction.Both);
                                 }
                                 //koncz rysowanie
                                 else
                                 {
-                                    edgeInBuild.SecondVertex = hovered as Vertex;
-                                    graph.AddEdge(edgeInBuild);
+                                    graph.edgeInBuild.SecondVertex = hovered as Vertex;
+                                    graph.AddEdge(graph.edgeInBuild);
 
-                                    edgeInBuild = null;
+                                    graph.edgeInBuild = null;
                                 }
 
                                 mainPanel.Refresh();
@@ -112,8 +112,8 @@ namespace wiercholki
                         //przerwij rysowanie krawedzi lub usun
                         if (e.Button == MouseButtons.Right)
                         {
-                            if (edgeInBuild != null)
-                                edgeInBuild = null;
+                            if (graph.edgeInBuild != null)
+                                graph.edgeInBuild = null;
                             else
                             {
                                 if (hovered as Edge != null)
@@ -176,7 +176,7 @@ namespace wiercholki
             graph.SelectedVertex = selected as Vertex;
             graph.HoveredEdge = hovered as Edge;
             graph.HoveredVertex = hovered as Vertex;
-            graph.edgeInBuild = edgeInBuild;
+            //graph.edgeInBuild = edgeInBuild;
         }
 
         private void mainPanel_MouseMove(object sender, MouseEventArgs e)
@@ -191,11 +191,12 @@ namespace wiercholki
                 mouse.X = e.X;
                 mouse.Y = e.Y;
 
-                //TogglePropertyPanel();
+
+                UpdateGraphFromInput();
 
                 if (state == InputState.MoveVertex)
                 {
-                    if ((selected as Vertex) != null)
+                    if (graph.SelectedVertex != null)
                     {
                         if (!clickPosition.HasValue)
                         {
@@ -207,21 +208,21 @@ namespace wiercholki
                             dX = e.Location.X - clickPosition.Value.X;
                             dY = e.Location.Y - clickPosition.Value.Y;
 
-                            (selected as Vertex).X += dX;
-                            (selected as Vertex).Y += dY;
+                            graph.SelectedVertex.X += dX;
+                            graph.SelectedVertex.Y += dY;
 
-                            if ((selected as Vertex).X < 0)
-                                (selected as Vertex).X = 0;
-                            if ((selected as Vertex).X > mainPanel.Width)
-                                (selected as Vertex).X = mainPanel.Width;
-                            if ((selected as Vertex).Y < 0)
-                                (selected as Vertex).Y = 0;
-                            if ((selected as Vertex).Y > mainPanel.Height)
-                                (selected as Vertex).Y = mainPanel.Height;
+                            if (graph.SelectedVertex.X < 0)
+                                graph.SelectedVertex.X = 0;
+                            if (graph.SelectedVertex.X > mainPanel.Width)
+                                graph.SelectedVertex.X = mainPanel.Width;
+                            if (graph.SelectedVertex.Y < 0)
+                                graph.SelectedVertex.Y = 0;
+                            if (graph.SelectedVertex.Y > mainPanel.Height)
+                                graph.SelectedVertex.Y = mainPanel.Height;
 
                             var relatedEdges = graph.edges.Where(edge =>
-                                (edge.FirstVertex == selected) ||
-                                (edge.SecondVertex == selected)).ToArray();
+                                (edge.FirstVertex == graph.SelectedVertex) ||
+                                (edge.SecondVertex == graph.SelectedVertex)).ToArray();
                             foreach (var edge in relatedEdges)
                             {
                                 graph.UpdatePaths(edge);
@@ -232,32 +233,7 @@ namespace wiercholki
                         }
                     }
                 }
-                if (state == InputState.MovePropertyPanel)
-                {
-                    if (!clickPosition.HasValue)
-                    {
-                        clickPosition = e.Location;
-                    }
-                    else
-                    {
-                        dX = e.Location.X - clickPosition.Value.X;
-                        dY = e.Location.Y - clickPosition.Value.Y;
 
-                        (selected as Vertex).X += dX;
-                        (selected as Vertex).Y += dY;
-
-                        var relatedEdges = graph.edges.Where(edge =>
-                            (edge.FirstVertex == selected) ||
-                            (edge.SecondVertex == selected)).ToArray();
-                        foreach (var edge in relatedEdges)
-                        {
-                            graph.UpdatePaths(edge);
-                        }
-
-                        //reset click postition so move offset won't increase forever
-                        clickPosition = e.Location;
-                    }
-                }
                 mainPanel.Refresh();
             }
         }
@@ -374,7 +350,8 @@ namespace wiercholki
         private void vertexModeButton_Click(object sender, EventArgs e)
         {
             state = InputState.DrawVertex;
-            edgeInBuild = null;
+            if (graph != null)
+                graph.edgeInBuild = null;
         }
 
         private void edgeModeButton_Click(object sender, EventArgs e)
@@ -385,21 +362,24 @@ namespace wiercholki
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             state = InputState.NoInput;
-            edgeInBuild = null;
+            if (graph != null)
+            {
+                graph.edgeInBuild = null;
+            }
         }
 
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (selected as Vertex != null)
+            if (graph.SelectedVertex != null)
             {
-                (selected as Vertex).Name = nameTextBox.Text;
-                matrixControl1.UpdateHeaders((Vertex)selected);
+                graph.SelectedVertex.Name = nameTextBox.Text;
+                matrixControl1.UpdateHeaders(graph.SelectedVertex);
 
-                int index = vertex1ComboBox.Items.IndexOf(selected);
+                int index = vertex1ComboBox.Items.IndexOf(graph.SelectedVertex);
                 vertex1ComboBox.Items.RemoveAt(index);
-                vertex1ComboBox.Items.Insert(index, selected);
+                vertex1ComboBox.Items.Insert(index, graph.SelectedVertex);
                 vertex2ComboBox.Items.RemoveAt(index);
-                vertex2ComboBox.Items.Insert(index, selected);
+                vertex2ComboBox.Items.Insert(index, graph.SelectedVertex);
             }
         }
 
@@ -410,7 +390,7 @@ namespace wiercholki
         /// <param name="e"></param>
         private void bothDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graph.ChangeDirection(selected as Edge, Direction.Both);
+            graph.ChangeDirection(graph.SelectedEdge, Direction.Both);
             mainPanel.Refresh();
         }
 
@@ -421,7 +401,7 @@ namespace wiercholki
         /// <param name="e"></param>
         private void firstDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graph.ChangeDirection(selected as Edge, Direction.ToFirst);
+            graph.ChangeDirection(graph.SelectedEdge, Direction.ToFirst);
             mainPanel.Refresh();
         }
 
@@ -432,7 +412,7 @@ namespace wiercholki
         /// <param name="e"></param>
         private void secondDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
-            graph.ChangeDirection(selected as Edge, Direction.ToSecond);
+            graph.ChangeDirection(graph.SelectedEdge, Direction.ToSecond);
             mainPanel.Refresh();
         }
 
@@ -571,7 +551,7 @@ namespace wiercholki
 
         private void weightTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (selected as Edge != null)
+            if (graph.SelectedEdge != null)
             {
                 try
                 {

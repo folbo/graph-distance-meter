@@ -16,9 +16,6 @@ namespace wiercholki.Logic
 
         public int maxWeight;
 
-        public object selected;
-        public object hovered;
-
         public Edge edgeInBuild;
 
         public Vertex HoveredVertex;
@@ -34,6 +31,8 @@ namespace wiercholki.Logic
 
             matrix = new Matrix();
             maxWeight = 10;
+
+            edgeInBuild = null;
         }
         public void AddVertex(Vertex elem)
         {
