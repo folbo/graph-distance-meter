@@ -391,6 +391,7 @@ namespace wiercholki
         private void bothDirectedRadio_MouseClick(object sender, MouseEventArgs e)
         {
             graph.ChangeDirection(graph.SelectedEdge, Direction.Both);
+            matrixControl1.LoadMatrix(graph.Matrix, graph.verticles);
             mainPanel.Refresh();
         }
 

@@ -85,10 +85,10 @@ namespace wiercholki.Logic
 
                     var bezierPoints = new System.Drawing.PointF[4]
                     {
-                        new System.Drawing.PointF(edge.FirstVertex.X, edge.FirstVertex.Y),
-                        new System.Drawing.PointF(edge.FirstVertex.X + 50*(float)Math.Sin((i*stepAngle) - 10), edge.FirstVertex.Y + 50*(float)Math.Cos((i*stepAngle) - 10)),
-                        new System.Drawing.PointF(edge.FirstVertex.X + 50*(float)Math.Sin((i*stepAngle) + 10), edge.FirstVertex.Y + 50*(float)Math.Cos((i*stepAngle) + 10)),
-                        new System.Drawing.PointF(edge.SecondVertex.X, edge.SecondVertex.Y)
+                        new PointF(edge.FirstVertex.X, edge.FirstVertex.Y),
+                        new PointF(edge.FirstVertex.X + 50*(float)Math.Sin((i*stepAngle) - 10), edge.FirstVertex.Y + 50*(float)Math.Cos((i*stepAngle) - 10)),
+                        new PointF(edge.FirstVertex.X + 50*(float)Math.Sin((i*stepAngle) + 10), edge.FirstVertex.Y + 50*(float)Math.Cos((i*stepAngle) + 10)),
+                        new PointF(edge.SecondVertex.X, edge.SecondVertex.Y)
                     };
                     edge.Path.AddBeziers(bezierPoints);
                 }
