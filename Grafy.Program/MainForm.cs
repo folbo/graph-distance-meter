@@ -324,6 +324,7 @@ namespace Grafy.Program
             if (radioButton != null && radioButton.Checked)
             {
                 _graph.ChangeDirection(_graph.SelectedEdge, Direction.Both);
+                graphPanel1.Refresh();
             }
         }
 
@@ -333,6 +334,7 @@ namespace Grafy.Program
             if (radioButton != null && radioButton.Checked)
             {
                 _graph.ChangeDirection(_graph.SelectedEdge, Direction.ToFirst);
+                graphPanel1.Refresh();
             }
         }
 
@@ -342,6 +344,7 @@ namespace Grafy.Program
             if (radioButton != null && radioButton.Checked)
             {
                 _graph.ChangeDirection(_graph.SelectedEdge, Direction.ToSecond);
+                graphPanel1.Refresh();
             }
         }
 
