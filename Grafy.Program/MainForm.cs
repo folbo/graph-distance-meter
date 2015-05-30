@@ -30,7 +30,7 @@ namespace Grafy.Program
             graphPanel1.Bitmap = new Bitmap(graphPanel1.Width, graphPanel1.Height);
             _graph = new Graph();
             _input = new Input();
-            _inputState = InputState.Idle;
+            _inputState = InputState.DrawVertex;
             _mouseCursor = new myPoint();
 
             propertyPanel.Visible = false;
@@ -64,6 +64,7 @@ namespace Grafy.Program
                             vertex1_ComboBox.Items.Add(newVertex);
                             vertex2_ComboBox.Items.Add(newVertex);
                             break;
+
                         case InputState.DrawEdge:
                             if (_graph.HoveredVertex != null)
                             {
@@ -90,10 +91,18 @@ namespace Grafy.Program
 
                                 _inputState = InputState.MoveVertex;
                             }
+                            else
+                            {
+                                _graph.SelectedVertex = null;
+                            }
                             if (_graph.HoveredEdge != null)
                             {
                                 _graph.SelectedEdge = _graph.HoveredEdge;
                                 _graph.SelectedVertex = null;
+                            }
+                            else
+                            {
+                                _graph.SelectedEdge = null;
                             }
 
                             break;
@@ -118,7 +127,7 @@ namespace Grafy.Program
                     _graph.SelectedEdge = null;
                     break;
             }
-
+            Update();
             adjMatrix_MatrixControl.LoadMatrix(_graph.AdjacencyMatrix, _graph.Verticles);
         }
 
@@ -145,6 +154,7 @@ namespace Grafy.Program
                     _input.MouseButtonState[2] = false;
                     break;
             }
+            Update();
         }
 
         private void graphPanel1_MouseMove(object sender, MouseEventArgs e)
@@ -215,6 +225,8 @@ namespace Grafy.Program
 
                 graphPanel1.Refresh();
                 TogglePropertyPanel();
+
+                Update();
             }
         }
 
@@ -396,6 +408,70 @@ namespace Grafy.Program
                 }
                 MessageBox.Show("Szukana odległość wynosi: " + i.ToString() + ".");
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void adjMatrix_MatrixControl_Load(object sender, EventArgs e)
+        {
+
+        }
+        public void Pomoc()
+        {
+            string pomocLabel2, pomocPanel, pomocOblicz, pomocMacSasiedztwa, pomocMacWprow, pomocRozpocznij, pomocVertex, pomocEdge, pomocMove;
+
+            pomocPanel = "Tutaj wprowadź swój graf, korzystjąc z opcji dodawania i edycji wierzchołków i krawędzi. Prawy przycisk myszy służy do usuwania obiektów";
+            pomocOblicz = "Użyj tego przycisku, aby obliczyć odległość między wierzchołkami {0} i {1}."; //referencje do list
+            pomocMacSasiedztwa = "To macierz sąsiedztwa Twojego grafu. Pokazuje istnienie połączeń między wierzchołkami grafu.";
+            pomocMacWprow = "To macierz, w której możesz wprowadzić własne wartośc ii z nich wygenerować graf.";
+            pomocRozpocznij = "Kliknij, aby zacząć pracęz programem.";
+            pomocVertex = "Wybierz, aby wprowadzić nowy wierzchołek.";
+            pomocEdge = "Wybierz, aby wprowadzić nową krawędź.";
+            pomocMove = "Wybierz, aby edytować elementy.";
+            pomocLabel2 = "Wybierz wierzchołki, między którymi chce obliczyc odległość.";
+        }
+        
+        private void Update()
+        {
+            if (_graph.Edges.Count == 0)
+            {
+                infol.Text = "To jest graf pusty.";
+            }
+            else if (_graph.IsMulti)
+            {
+                infol.Text = "To jest multigraf.";
+            }
+            else
+            {
+                infol.Text = "To jest graf prosty.";
+            }
+
+            TogglePropertyPanel();
+            graphPanel1.Refresh();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _graph = new Graph();
+            Update();
         }
     }
 }

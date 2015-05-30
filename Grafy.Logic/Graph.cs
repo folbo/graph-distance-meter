@@ -29,6 +29,8 @@ namespace Grafy.Logic
 
         public int maxWeight;
 
+        public bool IsMulti;
+
         public Graph()
         {
             _adjacencyMatrix = new AdjacencyMatrix();
@@ -43,6 +45,7 @@ namespace Grafy.Logic
             SelectedVertex = null;
 
             maxWeight = 10;
+            IsMulti = false;
         }
 
         public void UpdateVertexId()
@@ -84,6 +87,17 @@ namespace Grafy.Logic
             _edges.Add(elem);
             UpdateRelatedPaths(elem);
 
+            Edge[] edges =
+               _edges.Where(
+                   edge =>
+                       (edge.FirstVertex == elem.FirstVertex && edge.SecondVertex == elem.SecondVertex) ||
+                       (edge.FirstVertex == elem.SecondVertex && edge.SecondVertex == elem.FirstVertex)).ToArray();
+
+            if (edges.Length > 1)
+            {
+                IsMulti = true;
+            }
+
             if (updateAdjacencyMatrix)
             {
                 if (elem.Direction == Direction.Both)
@@ -113,6 +127,18 @@ namespace Grafy.Logic
         {
             if (_edges.Contains(elem))
                 _edges.Remove(elem);
+
+            Edge[] edges =
+               _edges.Where(
+                   edge =>
+                       (edge.FirstVertex == elem.FirstVertex && edge.SecondVertex == elem.SecondVertex) ||
+                       (edge.FirstVertex == elem.SecondVertex && edge.SecondVertex == elem.FirstVertex)).ToArray();
+
+            if (edges.Length <= 1)
+            {
+                IsMulti = false;
+            }
+
 
             if (updateAdjacencyMatrix)
             {
