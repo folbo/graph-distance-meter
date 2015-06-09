@@ -26,6 +26,7 @@ namespace Grafy.Program
         private AdjacencyMatrix _multipliedMatrix;
         private int _lastestShortestPath;
         private bool _dirty;
+
         private bool dirty 
         {
             get { return _dirty; }
@@ -307,6 +308,7 @@ namespace Grafy.Program
         {
             panelTitle_Label.Text = @"Właściowości krawędzi";
             propertyPanel.Height = 90; //185, 110
+            propertyPanel.Location = new Point(propertyPanel.Location.X, 168);
 
             name_Label.Text = @"Kierunek: ";
             name_TextBox.Visible = false;
@@ -336,7 +338,7 @@ namespace Grafy.Program
         {
             panelTitle_Label.Text = "Właściowości wierzchołka";
             propertyPanel.Height = 50; //185, 64
-
+            propertyPanel.Location = new Point(propertyPanel.Location.X, 208);
             name_Label.Text = "Nazwa";
             name_TextBox.Visible = true;
 
@@ -461,31 +463,6 @@ namespace Grafy.Program
                 MessageBox.Show("Szukana odległość wynosi: " + i.ToString() + ".");
             }
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void adjMatrix_MatrixControl_Load(object sender, EventArgs e)
-        {
-
-        }
         
         private void Update()
         {
@@ -537,6 +514,11 @@ namespace Grafy.Program
                 window.Text = _lastestShortestPath + " potęga macierzy";
                 window.ShowDialog();
             }
+        }
+
+        private void adjMatrix_MatrixControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -19,8 +19,6 @@ namespace Grafy.Program
             InitializeComponent();
         }
 
-
-
         public void LoadMatrix(AdjacencyMatrix matrix, List<Vertex> list)
         {
             matrixControl1.LoadMatrix(matrix, list);

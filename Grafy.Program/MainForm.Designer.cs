@@ -123,7 +123,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(339, 71);
             this.panel5.TabIndex = 7;
-            this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel5_Paint);
             // 
             // label2
             // 
@@ -177,7 +176,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(310, 1);
             this.pictureBox1.TabIndex = 77;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // label4
             // 
@@ -251,7 +249,6 @@
             this.adjMatrix_MatrixControl.Name = "adjMatrix_MatrixControl";
             this.adjMatrix_MatrixControl.Size = new System.Drawing.Size(292, 270);
             this.adjMatrix_MatrixControl.TabIndex = 0;
-            this.adjMatrix_MatrixControl.Load += new System.EventHandler(this.adjMatrix_MatrixControl_Load);
             // 
             // graphPanel1
             // 
@@ -365,7 +362,6 @@
             this.Controls.Add(this.label3);
             this.Name = "MainForm";
             this.Text = "Oblicznie odległości między zadanymi wierzchołkami grafu skierowanego";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel5.ResumeLayout(false);
