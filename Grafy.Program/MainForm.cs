@@ -27,6 +27,8 @@ namespace Grafy.Program
         private int _lastestShortestPath;
         private bool _dirty;
 
+        private bool _ignoreNameTextChanged;
+
         private bool dirty 
         {
             get { return _dirty; }
@@ -306,6 +308,8 @@ namespace Grafy.Program
 
         private void PropertyPanelEdge()
         {
+            _ignoreNameTextChanged = true;
+
             panelTitle_Label.Text = @"Właściowości krawędzi";
             propertyPanel.Height = 90; //185, 110
             propertyPanel.Location = new Point(propertyPanel.Location.X, 168);
@@ -336,6 +340,8 @@ namespace Grafy.Program
 
         void PropertyPanelVertex()
         {
+            _ignoreNameTextChanged = true;
+
             panelTitle_Label.Text = "Właściowości wierzchołka";
             propertyPanel.Height = 50; //185, 64
             propertyPanel.Location = new Point(propertyPanel.Location.X, 208);
@@ -408,6 +414,12 @@ namespace Grafy.Program
 
         private void name_TextBox_TextChanged(object sender, EventArgs e)
         {
+            if (_ignoreNameTextChanged)
+            {
+                _ignoreNameTextChanged = false;
+                return;
+            }
+
             if (_graph.SelectedVertex != null)
             {
                 _graph.SelectedVertex.Name = name_TextBox.Text;
@@ -459,7 +471,7 @@ namespace Grafy.Program
                 }
 
                 dirty = false;
-                _lastestShortestPath = i;
+                _lastestShortestPath = i == 0 ? 1 : i;
                 MessageBox.Show("Szukana odległość wynosi: " + i.ToString() + ".");
             }
         }
@@ -472,15 +484,15 @@ namespace Grafy.Program
             }
             else if (_graph.Edges.Count == 0)
             {
-                infol.Text = "To jest graf pusty.";
+                infol.Text = "graf pusty";
             }
             else if (_graph.IsMulti)
             {
-                infol.Text = "To jest multigraf.";
+                infol.Text = "multigraf";
             }
             else
             {
-                infol.Text = "To jest graf prosty.";
+                infol.Text = "graf prosty";
             }
 
             TogglePropertyPanel();
@@ -516,9 +528,14 @@ namespace Grafy.Program
             }
         }
 
-        private void adjMatrix_MatrixControl_Load(object sender, EventArgs e)
+        private void vertex1_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            dirty = true;
+        }
 
+        private void vertex2_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dirty = true;
         }
     }
 }

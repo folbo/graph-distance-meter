@@ -34,6 +34,7 @@
             this.select_radioButton = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.calculateDistance_Button = new System.Windows.Forms.Button();
             this.vertex1_ComboBox = new System.Windows.Forms.ComboBox();
@@ -45,7 +46,6 @@
             this.infol = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.showMatrix_Button = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.adjMatrix_MatrixControl = new Grafy.Program.MatrixControl();
@@ -59,6 +59,7 @@
             this.name_TextBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -115,14 +116,24 @@
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel5.Controls.Add(this.pictureBox3);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.calculateDistance_Button);
             this.panel5.Controls.Add(this.vertex1_ComboBox);
             this.panel5.Controls.Add(this.vertex2_ComboBox);
             this.panel5.Location = new System.Drawing.Point(22, 303);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(339, 71);
+            this.panel5.Size = new System.Drawing.Size(566, 71);
             this.panel5.TabIndex = 7;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pictureBox3.Location = new System.Drawing.Point(348, 3);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(1, 61);
+            this.pictureBox3.TabIndex = 88;
+            this.pictureBox3.TabStop = false;
             // 
             // label2
             // 
@@ -150,6 +161,7 @@
             this.vertex1_ComboBox.Name = "vertex1_ComboBox";
             this.vertex1_ComboBox.Size = new System.Drawing.Size(96, 21);
             this.vertex1_ComboBox.TabIndex = 2;
+            this.vertex1_ComboBox.SelectedIndexChanged += new System.EventHandler(this.vertex1_ComboBox_SelectedIndexChanged);
             // 
             // vertex2_ComboBox
             // 
@@ -158,6 +170,7 @@
             this.vertex2_ComboBox.Name = "vertex2_ComboBox";
             this.vertex2_ComboBox.Size = new System.Drawing.Size(94, 21);
             this.vertex2_ComboBox.TabIndex = 3;
+            this.vertex2_ComboBox.SelectedIndexChanged += new System.EventHandler(this.vertex2_ComboBox_SelectedIndexChanged);
             // 
             // pictureBox2
             // 
@@ -201,9 +214,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label5.Location = new System.Drawing.Point(619, 332);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
+            this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 84;
-            this.label5.Text = "Typ grafu";
+            this.label5.Text = "Typ grafu:";
             // 
             // showMatrix_Button
             // 
@@ -215,14 +228,6 @@
             this.showMatrix_Button.Text = "Wyświetl";
             this.showMatrix_Button.UseVisualStyleBackColor = true;
             this.showMatrix_Button.Click += new System.EventHandler(this.showMatrixButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label3.Location = new System.Drawing.Point(373, 303);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(215, 71);
-            this.label3.TabIndex = 85;
             // 
             // label6
             // 
@@ -359,13 +364,13 @@
             this.Controls.Add(this.adjMatrix_MatrixControl);
             this.Controls.Add(this.graphPanel1);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.label3);
             this.Name = "MainForm";
             this.Text = "Oblicznie odległości między zadanymi wierzchołkami grafu skierowanego";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -404,8 +409,8 @@
         private System.Windows.Forms.Label infol;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button showMatrix_Button;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
