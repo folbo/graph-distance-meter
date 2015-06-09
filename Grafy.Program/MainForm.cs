@@ -240,6 +240,8 @@ namespace Grafy.Program
             var radioButton = sender as RadioButton;
             if (radioButton != null && radioButton.Checked)
                 _inputState = InputState.DrawVertex;
+
+            TogglePropertyPanel();
         }
 
         private void drawEdge_radioButton_CheckedChanged(object sender, EventArgs e)
@@ -247,6 +249,8 @@ namespace Grafy.Program
             var radioButton = sender as RadioButton;
             if (radioButton != null && radioButton.Checked)
                 _inputState = InputState.DrawEdge;
+
+            TogglePropertyPanel();
         }
 
         private void select_radioButton_CheckedChanged(object sender, EventArgs e)
@@ -254,6 +258,8 @@ namespace Grafy.Program
             var radioButton = sender as RadioButton;
             if (radioButton != null && radioButton.Checked)
                 _inputState = InputState.Idle;
+
+            TogglePropertyPanel();
         }
 
         private void graphPanel1_Paint(object sender, PaintEventArgs e)
@@ -283,7 +289,6 @@ namespace Grafy.Program
             bothDirected_RadioButton.Visible = true;
             firstDirected_RadioButton.Visible = true;
             secondDirected_RadioButton.Visible = true;
-            weight_TextBox.Visible = true;
 
             if (_graph.SelectedEdge != null)
             {
@@ -294,7 +299,7 @@ namespace Grafy.Program
                 if (_graph.SelectedEdge.Direction == Direction.ToSecond)
                     secondDirected_RadioButton.Checked = true;
 
-                weight_TextBox.Text = _graph.SelectedEdge.Weight.ToString();
+              
 
                 //update labels
                 firstDirected_RadioButton.Text = "Do " + _graph.SelectedEdge.FirstVertex.Name;
@@ -313,25 +318,34 @@ namespace Grafy.Program
             bothDirected_RadioButton.Visible = false;
             firstDirected_RadioButton.Visible = false;
             secondDirected_RadioButton.Visible = false;
-            weight_TextBox.Visible = false;
         }
 
         private void TogglePropertyPanel()
         {
-
-            if (_graph.SelectedVertex == null)
+            if (_inputState == InputState.Idle)
             {
-                if (_graph.SelectedEdge != null)
+                if (_graph.SelectedVertex == null)
                 {
-                    PropertyPanelEdge();
+                    if (_graph.SelectedEdge != null)
+                    {
+                        PropertyPanelEdge();
+                        propertyPanel.Visible = true;
+                    }
+                    else
+                    {
+                        propertyPanel.Visible = false;
+                    }
+                }
+                else
+                {
+                    PropertyPanelVertex();
                     propertyPanel.Visible = true;
+                    name_TextBox.Text = _graph.SelectedVertex.Name;
                 }
             }
             else
             {
-                PropertyPanelVertex();
-                propertyPanel.Visible = true;
-                name_TextBox.Text = _graph.SelectedVertex.Name;
+                propertyPanel.Visible = false;
             }
         }
 

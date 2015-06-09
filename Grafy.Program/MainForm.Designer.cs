@@ -51,7 +51,6 @@
             this.adjMatrix_MatrixControl = new Grafy.Program.MatrixControl();
             this.graphPanel1 = new Grafy.Program.GraphPanel();
             this.propertyPanel = new System.Windows.Forms.Panel();
-            this.weight_TextBox = new System.Windows.Forms.TextBox();
             this.secondDirected_RadioButton = new System.Windows.Forms.RadioButton();
             this.firstDirected_RadioButton = new System.Windows.Forms.RadioButton();
             this.bothDirected_RadioButton = new System.Windows.Forms.RadioButton();
@@ -271,7 +270,6 @@
             this.propertyPanel.BackColor = System.Drawing.Color.White;
             this.propertyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.propertyPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.propertyPanel.Controls.Add(this.weight_TextBox);
             this.propertyPanel.Controls.Add(this.secondDirected_RadioButton);
             this.propertyPanel.Controls.Add(this.firstDirected_RadioButton);
             this.propertyPanel.Controls.Add(this.bothDirected_RadioButton);
@@ -282,13 +280,6 @@
             this.propertyPanel.Name = "propertyPanel";
             this.propertyPanel.Size = new System.Drawing.Size(185, 95);
             this.propertyPanel.TabIndex = 5;
-            // 
-            // weight_TextBox
-            // 
-            this.weight_TextBox.Location = new System.Drawing.Point(6, 65);
-            this.weight_TextBox.Name = "weight_TextBox";
-            this.weight_TextBox.Size = new System.Drawing.Size(54, 20);
-            this.weight_TextBox.TabIndex = 6;
             // 
             // secondDirected_RadioButton
             // 
@@ -397,7 +388,6 @@
         private System.Windows.Forms.Panel panel1;
         private MatrixControl adjMatrix_MatrixControl;
         private System.Windows.Forms.Panel propertyPanel;
-        private System.Windows.Forms.TextBox weight_TextBox;
         private System.Windows.Forms.RadioButton secondDirected_RadioButton;
         private System.Windows.Forms.RadioButton firstDirected_RadioButton;
         private System.Windows.Forms.RadioButton bothDirected_RadioButton;
