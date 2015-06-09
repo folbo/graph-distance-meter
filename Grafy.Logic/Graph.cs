@@ -266,12 +266,20 @@ namespace Grafy.Logic
                     if (edge.Direction == Direction.ToFirst)
                     {
                         AdjustableArrowCap cap = new AdjustableArrowCap(3, 7) {Filled = true};
-                        pen.CustomStartCap = cap;
+
+                        if(!edge.IsReversedPath)
+                            pen.CustomStartCap = cap;
+                        else
+                            pen.CustomEndCap = cap;
                     }
                     if (edge.Direction == Direction.ToSecond)
                     {
                         AdjustableArrowCap cap = new AdjustableArrowCap(3, 7) { Filled = true };
-                        pen.CustomEndCap = cap;
+
+                        if (!edge.IsReversedPath)
+                            pen.CustomEndCap = cap;
+                        else
+                            pen.CustomStartCap = cap;
                     }
 
                     graphics.DrawPath(pen, edge.Path);
@@ -337,7 +345,7 @@ namespace Grafy.Logic
                 foreach (var edge in edges)
                 {
                     edge.Path = new GraphicsPath();
-
+                    
                     //wektor krawedzi pierwszego wierzcholka
                     var tangentFirst = vector / vectorLength; //dlugosc 1
                     var tangentSecond =  vector / (vectorLength * -1); //dlugosc 1 i przeciwny kierunek
@@ -347,14 +355,19 @@ namespace Grafy.Logic
                     else
                         alfa *= -1;
 
+                    if (edge.FirstVertex != elem.FirstVertex && edge.IsReversedPath == false)
+                        edge.IsReversedPath = true;
+                    else
+                        edge.IsReversedPath = false;
+
                     tangentFirst = tangentFirst.Rotate(alfa) * edge.FirstVertex.Size / 2;
                     tangentSecond = tangentSecond.Rotate((-alfa)) * edge.FirstVertex.Size / 2;
 
                     var bezierPoints = new PointF[]
                     {
                         new PointF(elem.FirstVertex.X + tangentFirst.X, elem.FirstVertex.Y + tangentFirst.Y),
-                        new PointF(elem.FirstVertex.X+ tangentFirst.X*(float)5, elem.FirstVertex.Y+ tangentFirst.Y*(float)5),
-                        new PointF(elem.SecondVertex.X+tangentSecond.X*(float)5, elem.SecondVertex.Y+tangentSecond.Y*(float)5),
+                        new PointF(elem.FirstVertex.X+ tangentFirst.X*(float)4, elem.FirstVertex.Y+ tangentFirst.Y*(float)4),
+                        new PointF(elem.SecondVertex.X+tangentSecond.X*(float)4, elem.SecondVertex.Y+tangentSecond.Y*(float)4),
                         new PointF(elem.SecondVertex.X + tangentSecond.X, elem.SecondVertex.Y  + tangentSecond.Y)
                     };
 

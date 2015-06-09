@@ -16,11 +16,13 @@ namespace Grafy.Logic
             SecondVertex = secondVertex;
             Direction = dir;
             Weight = weight;
+            IsReversedPath = false;
         }
         public Vertex FirstVertex { get; set; }
         public Vertex SecondVertex { get; set; }
         public Direction Direction { get; set; }
         public int Weight { get; set; }
+        public bool IsReversedPath { get; set; }
         public System.Drawing.Drawing2D.GraphicsPath Path { get; internal set; }
     }
 }
