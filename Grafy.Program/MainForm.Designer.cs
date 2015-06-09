@@ -41,13 +41,13 @@
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.infol = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.showMatrixB = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.adjMatrix_MatrixControl = new Grafy.Program.MatrixControl();
             this.graphPanel1 = new Grafy.Program.GraphPanel();
             this.propertyPanel = new System.Windows.Forms.Panel();
@@ -58,7 +58,6 @@
             this.panelTitle_Label = new System.Windows.Forms.Label();
             this.name_Label = new System.Windows.Forms.Label();
             this.name_TextBox = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -95,7 +94,7 @@
             // select_radioButton
             // 
             this.select_radioButton.AutoSize = true;
-            this.select_radioButton.Location = new System.Drawing.Point(3, 316);
+            this.select_radioButton.Location = new System.Drawing.Point(3, 205);
             this.select_radioButton.Name = "select_radioButton";
             this.select_radioButton.Size = new System.Drawing.Size(54, 17);
             this.select_radioButton.TabIndex = 3;
@@ -111,7 +110,7 @@
             this.panel1.Controls.Add(this.select_radioButton);
             this.panel1.Location = new System.Drawing.Point(22, 15);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(90, 347);
+            this.panel1.Size = new System.Drawing.Size(90, 229);
             this.panel1.TabIndex = 0;
             // 
             // panel5
@@ -121,7 +120,7 @@
             this.panel5.Controls.Add(this.calculateDistance_Button);
             this.panel5.Controls.Add(this.vertex1_ComboBox);
             this.panel5.Controls.Add(this.vertex2_ComboBox);
-            this.panel5.Location = new System.Drawing.Point(22, 410);
+            this.panel5.Location = new System.Drawing.Point(22, 303);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(339, 71);
             this.panel5.TabIndex = 7;
@@ -165,35 +164,26 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pictureBox2.Location = new System.Drawing.Point(603, 13);
+            this.pictureBox2.Location = new System.Drawing.Point(602, 13);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(1, 585);
+            this.pictureBox2.Size = new System.Drawing.Size(1, 362);
             this.pictureBox2.TabIndex = 76;
             this.pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.pictureBox1.Location = new System.Drawing.Point(602, 361);
+            this.pictureBox1.Location = new System.Drawing.Point(603, 321);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(310, 1);
             this.pictureBox1.TabIndex = 77;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // label1
-            // 
-            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(622, 387);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(290, 94);
-            this.label1.TabIndex = 78;
-            this.label1.Text = "Treść pomocy...";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(619, 15);
+            this.label4.Location = new System.Drawing.Point(619, 294);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(126, 13);
             this.label4.TabIndex = 82;
@@ -202,7 +192,7 @@
             // infol
             // 
             this.infol.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.infol.Location = new System.Drawing.Point(622, 323);
+            this.infol.Location = new System.Drawing.Point(622, 354);
             this.infol.Name = "infol";
             this.infol.Size = new System.Drawing.Size(292, 20);
             this.infol.TabIndex = 83;
@@ -212,15 +202,15 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(619, 303);
+            this.label5.Location = new System.Drawing.Point(619, 332);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
+            this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 84;
-            this.label5.Text = "Typ grafu:";
+            this.label5.Text = "Typ grafu";
             // 
             // showMatrixB
             // 
-            this.showMatrixB.Location = new System.Drawing.Point(405, 446);
+            this.showMatrixB.Location = new System.Drawing.Point(405, 339);
             this.showMatrixB.Name = "showMatrixB";
             this.showMatrixB.Size = new System.Drawing.Size(162, 23);
             this.showMatrixB.TabIndex = 6;
@@ -230,7 +220,7 @@
             // label3
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label3.Location = new System.Drawing.Point(373, 410);
+            this.label3.Location = new System.Drawing.Point(373, 303);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(215, 71);
             this.label3.TabIndex = 85;
@@ -238,17 +228,27 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(395, 421);
+            this.label6.Location = new System.Drawing.Point(395, 314);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(180, 13);
             this.label6.TabIndex = 86;
             this.label6.Text = "Wyświetlanie macierzy potęgowanej:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(22, 250);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 35);
+            this.button1.TabIndex = 87;
+            this.button1.Text = "Wyczyść";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // adjMatrix_MatrixControl
             // 
-            this.adjMatrix_MatrixControl.Location = new System.Drawing.Point(622, 34);
+            this.adjMatrix_MatrixControl.Location = new System.Drawing.Point(622, 15);
             this.adjMatrix_MatrixControl.Name = "adjMatrix_MatrixControl";
-            this.adjMatrix_MatrixControl.Size = new System.Drawing.Size(292, 251);
+            this.adjMatrix_MatrixControl.Size = new System.Drawing.Size(292, 270);
             this.adjMatrix_MatrixControl.TabIndex = 0;
             this.adjMatrix_MatrixControl.Load += new System.EventHandler(this.adjMatrix_MatrixControl_Load);
             // 
@@ -259,7 +259,7 @@
             this.graphPanel1.Controls.Add(this.propertyPanel);
             this.graphPanel1.Location = new System.Drawing.Point(119, 15);
             this.graphPanel1.Name = "graphPanel1";
-            this.graphPanel1.Size = new System.Drawing.Size(469, 389);
+            this.graphPanel1.Size = new System.Drawing.Size(469, 270);
             this.graphPanel1.TabIndex = 0;
             this.graphPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphPanel1_Paint);
             this.graphPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graphPanel1_MouseDown);
@@ -278,7 +278,7 @@
             this.propertyPanel.Controls.Add(this.panelTitle_Label);
             this.propertyPanel.Controls.Add(this.name_Label);
             this.propertyPanel.Controls.Add(this.name_TextBox);
-            this.propertyPanel.Location = new System.Drawing.Point(277, 286);
+            this.propertyPanel.Location = new System.Drawing.Point(277, 168);
             this.propertyPanel.Name = "propertyPanel";
             this.propertyPanel.Size = new System.Drawing.Size(185, 95);
             this.propertyPanel.TabIndex = 5;
@@ -352,28 +352,17 @@
             this.name_TextBox.TabIndex = 0;
             this.name_TextBox.TextChanged += new System.EventHandler(this.name_TextBox_TextChanged);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(22, 369);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 35);
-            this.button1.TabIndex = 87;
-            this.button1.Text = "Wyczyść";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(936, 633);
+            this.ClientSize = new System.Drawing.Size(936, 390);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.showMatrixB);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.infol);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.panel1);
@@ -423,7 +412,6 @@
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label infol;
         private System.Windows.Forms.Label label5;
