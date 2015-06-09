@@ -115,6 +115,11 @@ namespace Grafy.Program
 
                     if (_graph.HoveredVertex != null)
                     {
+                        string name = _graph.HoveredVertex.Name;
+
+                        vertex1_ComboBox.Items.Remove(_graph.HoveredVertex);
+                        vertex2_ComboBox.Items.Remove(_graph.HoveredVertex);
+
                         _graph.RemoveVertex(_graph.HoveredVertex);
                     }
 
