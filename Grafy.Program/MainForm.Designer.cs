@@ -44,7 +44,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.infol = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.showMatrixB = new System.Windows.Forms.Button();
+            this.showMatrix_Button = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -207,14 +207,16 @@
             this.label5.TabIndex = 84;
             this.label5.Text = "Typ grafu";
             // 
-            // showMatrixB
+            // showMatrix_Button
             // 
-            this.showMatrixB.Location = new System.Drawing.Point(405, 339);
-            this.showMatrixB.Name = "showMatrixB";
-            this.showMatrixB.Size = new System.Drawing.Size(162, 23);
-            this.showMatrixB.TabIndex = 6;
-            this.showMatrixB.Text = "Wyświetl";
-            this.showMatrixB.UseVisualStyleBackColor = true;
+            this.showMatrix_Button.Enabled = false;
+            this.showMatrix_Button.Location = new System.Drawing.Point(405, 339);
+            this.showMatrix_Button.Name = "showMatrix_Button";
+            this.showMatrix_Button.Size = new System.Drawing.Size(162, 23);
+            this.showMatrix_Button.TabIndex = 6;
+            this.showMatrix_Button.Text = "Wyświetl";
+            this.showMatrix_Button.UseVisualStyleBackColor = true;
+            this.showMatrix_Button.Click += new System.EventHandler(this.showMatrixButton_Click);
             // 
             // label3
             // 
@@ -350,7 +352,7 @@
             this.ClientSize = new System.Drawing.Size(936, 390);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.showMatrixB);
+            this.Controls.Add(this.showMatrix_Button);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.infol);
             this.Controls.Add(this.label4);
@@ -405,7 +407,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label infol;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button showMatrixB;
+        private System.Windows.Forms.Button showMatrix_Button;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;

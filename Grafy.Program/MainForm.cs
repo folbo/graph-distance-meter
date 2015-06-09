@@ -23,6 +23,19 @@ namespace Grafy.Program
 
         private string _nextVertexName = "A";
 
+        private AdjacencyMatrix _multipliedMatrix;
+        private int _lastestShortestPath;
+        private bool _dirty;
+        private bool dirty 
+        {
+            get { return _dirty; }
+            set
+            {
+                _dirty = value;
+                Update();
+            } 
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -34,6 +47,8 @@ namespace Grafy.Program
             _mouseCursor = new myPoint();
 
             propertyPanel.Visible = false;
+
+            dirty = true;
         }
 
         private void graphPanel1_MouseDown(object sender, MouseEventArgs e)
@@ -63,6 +78,9 @@ namespace Grafy.Program
 
                             vertex1_ComboBox.Items.Add(newVertex);
                             vertex2_ComboBox.Items.Add(newVertex);
+
+                            dirty = true;
+
                             break;
 
                         case InputState.DrawEdge:
@@ -80,9 +98,12 @@ namespace Grafy.Program
                                     _graph.AddEdge(_graph.EdgeInBuild);
 
                                     _graph.EdgeInBuild = null;
+
+                                    dirty = true;
                                 }
                             }
                             break;
+
                         case InputState.Idle:
                             if (_graph.HoveredVertex != null)
                             {
@@ -121,11 +142,15 @@ namespace Grafy.Program
                         vertex2_ComboBox.Items.Remove(_graph.HoveredVertex);
 
                         _graph.RemoveVertex(_graph.HoveredVertex);
+
+                        dirty = true;
                     }
 
                     if (_graph.HoveredEdge != null)
                     {
                         _graph.RemoveEdge(_graph.HoveredEdge);
+
+                        dirty = true;
                     }
 
                     _graph.SelectedVertex = null;
@@ -391,6 +416,8 @@ namespace Grafy.Program
                 vertex1_ComboBox.Items.Insert(index, _graph.SelectedVertex);
                 vertex2_ComboBox.Items.RemoveAt(index);
                 vertex2_ComboBox.Items.Insert(index, _graph.SelectedVertex);
+
+                dirty = true;
             }
         }
 
@@ -400,6 +427,7 @@ namespace Grafy.Program
         {
             Vertex firstSelected = vertex1_ComboBox.SelectedItem as Vertex;
             Vertex secondSelected = vertex2_ComboBox.SelectedItem as Vertex;
+
             if (firstSelected != null && secondSelected != null)
             {
                 if (firstSelected == secondSelected)
@@ -410,21 +438,26 @@ namespace Grafy.Program
                     return;
                 }
 
+                _multipliedMatrix = _graph.AdjacencyMatrix;
                 int i = 1;
+
                 if (_graph.AdjacencyMatrix[firstSelected.Id, secondSelected.Id] <= 0)
                 {
-                    var multiplied = _graph.AdjacencyMatrix.MultiplyMatrix(_graph.AdjacencyMatrix);
+                    _multipliedMatrix = _graph.AdjacencyMatrix.MultiplyMatrix(_graph.AdjacencyMatrix);
                     i++;
-                    while (multiplied[firstSelected.Id, secondSelected.Id] <= 0 && i < _graph.Verticles.Count)
+                    while (_multipliedMatrix[firstSelected.Id, secondSelected.Id] <= 0 && i < _graph.Verticles.Count)
                     {
                         i++;
-                        multiplied = _graph.AdjacencyMatrix.MultiplyMatrix(multiplied);
+                        _multipliedMatrix = _graph.AdjacencyMatrix.MultiplyMatrix(_multipliedMatrix);
                     }
-                    if (multiplied[firstSelected.Id, secondSelected.Id] == 0)
+                    if (_multipliedMatrix[firstSelected.Id, secondSelected.Id] == 0)
                     {
                         i = 0;
                     }
                 }
+
+                dirty = false;
+                _lastestShortestPath = i;
                 MessageBox.Show("Szukana odległość wynosi: " + i.ToString() + ".");
             }
         }
@@ -475,6 +508,8 @@ namespace Grafy.Program
 
             TogglePropertyPanel();
             graphPanel1.Refresh();
+
+            showMatrix_Button.Enabled = !dirty;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -487,7 +522,21 @@ namespace Grafy.Program
 
             _nextVertexName = "A";
 
+            showMatrix_Button.Enabled = false;
+
             Update();
+        }
+
+        private void showMatrixButton_Click(object sender, EventArgs e)
+        {
+            if (_multipliedMatrix != null)
+            {
+                MatrixWindow window = new MatrixWindow();
+
+                window.LoadMatrix(_multipliedMatrix, _graph.Verticles);
+                window.Text = _lastestShortestPath + " potęga macierzy";
+                window.ShowDialog();
+            }
         }
     }
 }
