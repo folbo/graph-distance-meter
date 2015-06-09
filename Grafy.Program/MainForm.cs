@@ -434,24 +434,14 @@ namespace Grafy.Program
         {
 
         }
-        public void Pomoc()
-        {
-            string pomocLabel2, pomocPanel, pomocOblicz, pomocMacSasiedztwa, pomocMacWprow, pomocRozpocznij, pomocVertex, pomocEdge, pomocMove;
-
-            pomocPanel = "Tutaj wprowadź swój graf, korzystjąc z opcji dodawania i edycji wierzchołków i krawędzi. Prawy przycisk myszy służy do usuwania obiektów";
-            pomocOblicz = "Użyj tego przycisku, aby obliczyć odległość między wierzchołkami {0} i {1}."; //referencje do list
-            pomocMacSasiedztwa = "To macierz sąsiedztwa Twojego grafu. Pokazuje istnienie połączeń między wierzchołkami grafu.";
-            pomocMacWprow = "To macierz, w której możesz wprowadzić własne wartośc ii z nich wygenerować graf.";
-            pomocRozpocznij = "Kliknij, aby zacząć pracęz programem.";
-            pomocVertex = "Wybierz, aby wprowadzić nowy wierzchołek.";
-            pomocEdge = "Wybierz, aby wprowadzić nową krawędź.";
-            pomocMove = "Wybierz, aby edytować elementy.";
-            pomocLabel2 = "Wybierz wierzchołki, między którymi chce obliczyc odległość.";
-        }
         
         private void Update()
         {
-            if (_graph.Edges.Count == 0)
+            if (_graph == null)
+            {
+                infol.Text = "...";
+            }
+            else if (_graph.Edges.Count == 0)
             {
                 infol.Text = "To jest graf pusty.";
             }
@@ -471,6 +461,13 @@ namespace Grafy.Program
         private void button1_Click(object sender, EventArgs e)
         {
             _graph = new Graph();
+            adjMatrix_MatrixControl.LoadMatrix(_graph.AdjacencyMatrix, _graph.Verticles);
+
+            vertex1_ComboBox.Items.Clear();
+            vertex2_ComboBox.Items.Clear();
+
+            _nextVertexName = "A";
+
             Update();
         }
     }
