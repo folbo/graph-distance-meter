@@ -329,32 +329,33 @@ namespace Grafy.Logic
                 double alfa = 0; //15 stopni
                 double alfaStep = 2*(Math.PI/4/edges.Length);
                 int i = 0; //licznik pętli
-                int changeSide = 1;
+
+                //zdefiniuj wektor między wierzcholkami
+                var vector = new myPoint(elem.SecondVertex.X - elem.FirstVertex.X, elem.SecondVertex.Y - elem.FirstVertex.Y);
+                double vectorLength = Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+
                 foreach (var edge in edges)
                 {
                     edge.Path = new GraphicsPath();
 
-                    //zdefiniuj wektor między wierzcholkami
-                    var vector = new myPoint(edge.SecondVertex.X - edge.FirstVertex.X, edge.SecondVertex.Y - edge.FirstVertex.Y);
-                    double vectorLength = Math.Sqrt(vector.X*vector.X + vector.Y*vector.Y);
                     //wektor krawedzi pierwszego wierzcholka
-
                     var tangentFirst = vector / vectorLength; //dlugosc 1
                     var tangentSecond =  vector / (vectorLength * -1); //dlugosc 1 i przeciwny kierunek
-                        changeSide *= -1;
+                   
                     if (i%2 != 0)
-                        alfa = changeSide*alfaStep*i;
+                        alfa = alfaStep*i;
                     else
                         alfa *= -1;
+
                     tangentFirst = tangentFirst.Rotate(alfa) * edge.FirstVertex.Size / 2;
                     tangentSecond = tangentSecond.Rotate((-alfa)) * edge.FirstVertex.Size / 2;
 
                     var bezierPoints = new PointF[]
                     {
-                        new PointF(edge.FirstVertex.X + tangentFirst.X, edge.FirstVertex.Y + tangentFirst.Y),
-                        new PointF(edge.FirstVertex.X+ tangentFirst.X*(float)5, edge.FirstVertex.Y+ tangentFirst.Y*(float)5),
-                        new PointF(edge.SecondVertex.X+tangentSecond.X*(float)5, edge.SecondVertex.Y+tangentSecond.Y*(float)5),
-                        new PointF(edge.SecondVertex.X + tangentSecond.X, edge.SecondVertex.Y  + tangentSecond.Y)
+                        new PointF(elem.FirstVertex.X + tangentFirst.X, elem.FirstVertex.Y + tangentFirst.Y),
+                        new PointF(elem.FirstVertex.X+ tangentFirst.X*(float)5, elem.FirstVertex.Y+ tangentFirst.Y*(float)5),
+                        new PointF(elem.SecondVertex.X+tangentSecond.X*(float)5, elem.SecondVertex.Y+tangentSecond.Y*(float)5),
+                        new PointF(elem.SecondVertex.X + tangentSecond.X, elem.SecondVertex.Y  + tangentSecond.Y)
                     };
 
                     edge.Path.AddBeziers(bezierPoints);
